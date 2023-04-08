@@ -64,8 +64,8 @@ router.post('/register', asyncHandler(
 router.post('/update', asyncHandler(
   async (req:any, res) => {
     const {name, email, password, address} = req.body;
-    const user = await UserModel.findOne({email});
-    console.log(user);
+    const user = await UserModel.findOne({ email: new RegExp('^' + email + '$', 'i') }); //lower case and match last and start of string
+
     if(!user){
       res.status(HTTP_BAD_REQUEST)
       .send('user not found');
@@ -81,9 +81,9 @@ router.post('/update', asyncHandler(
       address,
       isAdmin: false
     }
-    const updatedUser = await UserModel.findByIdAndUpdate(user.id, req.body, { new: true });
+    const updatedUser = await UserModel.findByIdAndUpdate(user.id,updateUser, { new: true });
     if(updatedUser)
-      res.send(generateTokenReponse(updateUser));
+      res.send(generateTokenReponse(updatedUser));
     else
       res.status(HTTP_BAD_REQUEST).send('user not updated');
   }
