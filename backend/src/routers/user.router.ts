@@ -61,6 +61,34 @@ router.post('/register', asyncHandler(
   }
 ))
 
+router.post('/update', asyncHandler(
+  async (req:any, res) => {
+    const {name, email, password, address} = req.body;
+    const user = await UserModel.findOne({email});
+    console.log(user);
+    if(!user){
+      res.status(HTTP_BAD_REQUEST)
+      .send('user not found');
+      return;
+    }
+    const encryptedPassword = await bcrypt.hash(password, 10);
+
+    const updateUser:User = {
+      id:'',
+      name,
+      email: email.toLowerCase(),
+      password: encryptedPassword,
+      address,
+      isAdmin: false
+    }
+    const updatedUser = await UserModel.findByIdAndUpdate(user.id, req.body, { new: true });
+    if(updatedUser)
+      res.send(generateTokenReponse(updateUser));
+    else
+      res.status(HTTP_BAD_REQUEST).send('user not updated');
+  }
+))
+
   const generateTokenReponse = (user : User) => {
     const token = jwt.sign({
       id: user.id, email:user.email, isAdmin: user.isAdmin
