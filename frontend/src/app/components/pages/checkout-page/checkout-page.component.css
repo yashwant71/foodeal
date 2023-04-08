@@ -9,6 +9,7 @@
 .content{
   width: 35rem;
   margin-right: 3rem;
+  margin-left: 2rem;
 }
 
 .content,form{
@@ -46,4 +47,10 @@ button{
 button:hover{
   opacity: 1;
   cursor: pointer;
+}
+
+@media (max-width: 785px) {
+  .buttons{
+    width: 90vw;
+  }
 }

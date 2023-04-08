@@ -8,7 +8,7 @@
 
 .content{
   width: 35rem;
-  margin-right: 3rem;
+  margin: 3rem;
   display: flex;
   flex-direction: column;
 }
@@ -37,4 +37,10 @@
 .buttons{
   margin: 2rem;
   width: 35rem;
+}
+
+@media (max-width: 785px) {
+  .buttons-container{
+    width: 90vw;
+  }
 }

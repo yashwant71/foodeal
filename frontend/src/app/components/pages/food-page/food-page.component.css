@@ -131,3 +131,14 @@ button:hover{
   opacity: 0.9;
   cursor: pointer;
 }
+
+
+@media (max-width: 785px) {
+  /* CSS rules for screens with a maximum width of 785px or less */
+  .container{
+    margin: unset;
+  }
+  .imgcontainer img{
+    width: 80vw;
+  }
+}

@@ -121,3 +121,16 @@ li .remove-button:hover{
   opacity: 1;
   cursor: pointer;
 }
+
+@media (max-width: 785px) {
+  .container{
+    flex-direction: column;
+  }
+  .checkout{
+    flex-direction: row;
+    align-self: center;
+  }
+  .checkout a{
+    width: 46%;
+  }
+}

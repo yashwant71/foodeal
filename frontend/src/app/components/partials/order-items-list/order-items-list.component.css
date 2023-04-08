@@ -26,3 +26,14 @@ td img{
   object-fit: cover;
   border-radius: 100rem;
 }
+
+strong{
+  white-space: nowrap;
+}
+.aligncent{
+  text-align: center;
+}
+
+.aligncent td{
+  padding: 5px;
+}

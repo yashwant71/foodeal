@@ -4,7 +4,7 @@
       <h3>Order Items:</h3>
     </td>
   </tr>
-  <tr *ngFor="let item of order.items">
+  <tr *ngFor="let item of order.items" class="aligncent">
     <td>
       <a routerLink="/food/{{item.food.id}}">
         <img [src]="item.food.imageUrl"/>
@@ -23,7 +23,7 @@
       {{item.price | currency}}
     </td>
   </tr>
-  <tr>
+  <tr class="aligncent">
     <td colspan="3"></td>
     <td>
       <strong>
