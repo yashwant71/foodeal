@@ -12,6 +12,9 @@ export class HeaderComponent implements OnInit {
 
   cartQuantity=0;
   user!:User;
+  userImage: string | ArrayBuffer | null = null;
+  selectedFile: File | null = null;
+
   constructor(cartService:CartService,private userService:UserService) {
     cartService.getCartObservable().subscribe((newCart) => {
       this.cartQuantity = newCart.totalCount;
@@ -23,6 +26,18 @@ export class HeaderComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    // adding image from localstorage
+    const userImage = localStorage.getItem(`userImage_${this.userService.currentUser.id}`);
+    if (userImage) {
+      this.userImage = userImage;
+    }
+    // if we receive image updated event we update the image
+    this.userService.userImageUpdated$.subscribe(() => {
+      const userImage = localStorage.getItem(`userImage_${this.userService.currentUser.id}`);
+      if (userImage) {
+        this.userImage = userImage;
+      }
+    })
   }
 
   logout(){

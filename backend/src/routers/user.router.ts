@@ -6,6 +6,45 @@ import { User, UserModel } from '../models/user.model';
 import { HTTP_BAD_REQUEST } from '../constants/http_status';
 import bcrypt from 'bcryptjs';
 const router = Router();
+import multer, { Multer } from 'multer';
+import * as fs from 'fs';
+import * as glob from 'glob';
+
+/// Created an instance of Multer to handle file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/user'); // setting the folder to which the file will be saved
+  },
+  filename: function (req, file, cb) {
+    const userId = req.params.userId;
+    const ext = file.originalname.split('.').pop();
+    cb(null, userId + '.' + ext); // setting the filename of the saved file as the userId
+  }
+});
+const upload = multer({ storage: multer.memoryStorage() });
+
+
+
+router.post('/uploadUserImage/:userId', upload.single('image'), asyncHandler(
+  async (req, res) => {
+    const userId = req.params.userId;
+    console.log("userId:",req.params.userId)
+    console.log(req.file)
+    const files = glob.sync(`./uploads/user/${userId}.*`); // find all files that match the pattern
+    files.forEach((file) => {
+      console.log("file::",file)
+      fs.unlinkSync(file); // delete each file
+    });
+    if(req.file){// adding the image 
+      const newImagePath = `./uploads/user/${userId}.${req.file.originalname.split('.').pop()}`;
+      fs.writeFile(newImagePath, req.file.buffer, (err) => {
+        if (err) throw err;
+        console.log('New image saved');
+      });
+    }
+    res.send({ message: "Image uploaded successfully" });
+  }
+));
 
 router.get("/seed", asyncHandler(
   async (req, res) => {

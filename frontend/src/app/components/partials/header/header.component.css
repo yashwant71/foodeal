@@ -47,6 +47,17 @@ a span{
 
 .menu-container{
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-container img{
+  margin: 4px;
+  border-radius: 50%;
+  object-fit: cover;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .menu{
@@ -54,6 +65,8 @@ a span{
   z-index:1;
   background:whitesmoke;
   display: none;
+  top: 50px;
+  right: -80px;
 }
 
 .menu-container:hover .menu{

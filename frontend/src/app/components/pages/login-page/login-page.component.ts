@@ -37,6 +37,7 @@ export class LoginPageComponent implements OnInit {
     this.userService.login({email:this.fc.email.value,
        password: this.fc.password.value}).subscribe(() => {
          this.router.navigateByUrl(this.returnUrl);
+         this.userService.userImageUpdatedSubject.next(); // emit the event to update user image 
        });
   }
 

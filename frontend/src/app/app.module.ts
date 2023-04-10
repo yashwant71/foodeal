@@ -31,6 +31,7 @@ import { PaymentPageComponent } from './components/pages/payment-page/payment-pa
 import { PaypalButtonComponent } from './components/partials/paypal-button/paypal-button.component';
 import { OrderTrackPageComponent } from './components/pages/order-track-page/order-track-page.component';
 import { ProfileComponent } from './components/pages/profile/profile.component';
+import { ImageUploadComponent } from './components/partials/image-upload/image-upload.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +56,8 @@ import { ProfileComponent } from './components/pages/profile/profile.component';
     PaymentPageComponent,
     PaypalButtonComponent,
     OrderTrackPageComponent,
-    ProfileComponent
+    ProfileComponent,
+    ImageUploadComponent
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,9 @@
           <a routerLink="/login">Login</a>
         </li>
         <li *ngIf="isAuth" class="menu-container">
-          <a routerLink="/dashboard" [title]="user.name">{{user.name}}</a>
+          <!-- <a routerLink="/dashboard" [title]="user.name">{{user.name}}</a> -->
+            <img *ngIf="!userImage" src="assets/user.png" width="40" [title]="user.name">
+            <img *ngIf="userImage" [src]="userImage" width="40" [title]="user.name">
           <div class="menu">
             <a routerLink="/profile" title="profile">Profile</a>
             <a routerLink="/orders" title="orders">Orders</a>

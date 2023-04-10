@@ -1,6 +1,8 @@
 <div class="container">
   <div class="details">
     <app-title title="Update Your Profile"></app-title>
+    <image-upload [userImage]="userImage" (imageSelected)="onImageSelected($event)"  [buttonText]="imageButtonText"></image-upload>
+
     <form [formGroup]="registerForm" (ngSubmit)="submit()">
       <text-input
       [control]="fc.name"
