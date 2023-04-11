@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import path from 'path';
+import fs from 'fs';
 import express from "express";
 import cors from "cors";
 import foodRouter from './routers/food.router';
@@ -9,14 +10,19 @@ import orderRouter from './routers/order.router';
 import { dbConnect } from './configs/database.config';
 dbConnect();
 
-import * as fs from 'fs';
 
-const folderPath = './uploads'; 
-// to give read write perms
-fs.chmod(folderPath, 0o755, function (err) {
-  if (err) throw err;
-  console.log('Folder permission set to 755');
-});
+const dirPath = path.join(__dirname, './uploads');
+
+if (fs.existsSync(dirPath)) {
+  // directory exists, set permissions
+  fs.chmod(dirPath, 0o755, (err) => {
+    if (err) throw err;
+    console.log('Folder permission set to 755');
+  });
+} else {
+  // directory does not exist
+  console.log('Directory does not exist!');
+}
 
 const app = express();
 app.use(express.json());
