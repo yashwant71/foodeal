@@ -9,6 +9,15 @@ import orderRouter from './routers/order.router';
 import { dbConnect } from './configs/database.config';
 dbConnect();
 
+import * as fs from 'fs';
+
+const folderPath = './uploads'; 
+// to give read write perms
+fs.chmod(folderPath, 0o755, function (err) {
+  if (err) throw err;
+  console.log('Folder permission set to 755');
+});
+
 const app = express();
 app.use(express.json());
 app.use(cors({
