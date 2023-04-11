@@ -11,18 +11,26 @@ import { dbConnect } from './configs/database.config';
 dbConnect();
 
 
-const dirPath = path.join(__dirname, './uploads');
+const uploadsDirPath = path.join(__dirname, 'uploads');
+const userDirPath = path.join(uploadsDirPath, 'user');
 
-if (fs.existsSync(dirPath)) {
-  // directory exists, set permissions
-  fs.chmod(dirPath, 0o755, (err) => {
-    if (err) throw err;
-    console.log('Folder permission set to 755');
-  });
-} else {
-  // directory does not exist
-  console.log('Directory does not exist!');
+if (!fs.existsSync(uploadsDirPath)) {
+  // create uploads directory if it doesn't exist
+  fs.mkdirSync(uploadsDirPath);
+  console.log("uploads didnt exist ,thus created uploads")
 }
+
+if (!fs.existsSync(userDirPath)) {
+    // create user directory if it doesn't exist
+    fs.mkdirSync(userDirPath);
+    console.log("user didnt exist ,thus created user")
+}
+
+// set permissions for both directories
+fs.chmodSync(uploadsDirPath, 0o755);
+console.log("gave 755 perms to uploads")
+fs.chmodSync(userDirPath, 0o755);
+console.log("gave 755 perms to user")
 
 const app = express();
 app.use(express.json());
