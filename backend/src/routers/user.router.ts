@@ -9,7 +9,7 @@ const router = Router();
 import multer, { Multer } from 'multer';
 import * as fs from 'fs';
 import * as glob from 'glob';
-
+import mime from 'mime-types';
 /// Created an instance of Multer to handle file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -41,11 +41,28 @@ router.post('/uploadUserImage/:userId', upload.single('image'), asyncHandler(
         if (err) throw err;
         console.log('New image saved');
       });
+      const imageBuffer = req.file.buffer;
+      res.set('Content-Type', req.file.mimetype);
+      res.send(imageBuffer);
+    }else {
+      res.status(400).send({ message: "Please upload an image file" });
     }
-    res.send({ message: "Image uploaded successfully" });
   }
 ));
-
+router.get('/getUserImage/:userId', asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  const imagePath = `./uploads/user/${userId}.*`;
+  const files = glob.sync(imagePath);
+  
+  if (files.length > 0) {
+    const fileContent = fs.readFileSync(files[0]);
+    const mimeType = mime.lookup(files[0]) || 'application/octet-stream';
+    res.setHeader('Content-Type', mimeType);
+    res.send(fileContent);
+  } else {
+    res.status(404).send({ message: 'Image not found' });
+  }
+}));
 router.get("/seed", asyncHandler(
   async (req, res) => {
      const usersCount = await UserModel.countDocuments();

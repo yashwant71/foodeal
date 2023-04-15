@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'image-upload',
@@ -7,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./image-upload.component.css']
 })
 export class ImageUploadComponent {
-  @Input() userImage: string | ArrayBuffer | null = null;
+  @Input() userImage: SafeUrl | null = null;
   @Input() buttonText: string = 'Add Image';
   @Output() imageSelected = new EventEmitter<File>();
   isImageSelected = false;

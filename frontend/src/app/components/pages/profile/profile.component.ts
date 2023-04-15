@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
-import { IUserRegister } from 'src/app/shared/interfaces/IUserRegister';
 import { IUserUpdate } from 'src/app/shared/interfaces/IUserUpdate';
 import { PasswordsMatchValidator } from 'src/app/shared/validators/password_match_validator';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +15,7 @@ import { PasswordsMatchValidator } from 'src/app/shared/validators/password_matc
 export class ProfileComponent {
   registerForm!:FormGroup;
   isSubmitted = false;
-  userImage: string | ArrayBuffer | null = null;
+  userImage: SafeUrl | null = null;
   selectedFile: File | null = null;
   imageButtonText: string = 'Profile Image';
 
@@ -25,11 +25,11 @@ export class ProfileComponent {
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private toastrService:ToastrService
+    private toastrService:ToastrService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
-    console.log(this.userService.currentUser)
     this.registerForm = this.formBuilder.group({
       name: [this.userService.currentUser.name, [Validators.required, Validators.minLength(5)]],
       email: [this.userService.currentUser.email, [Validators.required, Validators.email]],
@@ -42,9 +42,17 @@ export class ProfileComponent {
     //saving the image in localstorage to use in imagecomponent
     const userImage = localStorage.getItem(`userImage_${this.userService.currentUser.id}`);
     if (userImage) {
-      this.userImage = userImage;
+      this.userImage = this.sanitizer.bypassSecurityTrustUrl(userImage);
     }
     this.returnUrl= this.activatedRoute.snapshot.queryParams.returnUrl;
+
+    // if we receive image updated event we update the image
+    this.userService.userImageUpdated$.subscribe(() => {
+    const userImage = localStorage.getItem(`userImage_${this.userService.currentUser.id}`);
+    if (userImage) {
+      this.userImage = this.sanitizer.bypassSecurityTrustUrl(userImage);
+    }
+    })
   }
 
   get fc() {
@@ -60,10 +68,11 @@ export class ProfileComponent {
     const reader = new FileReader();
     reader.onloadend = () => {
       this.userService.uploadUserImage(this.userService.currentUser.id, file)
-        .then(() => {
-          this.userImage = reader.result as string;
-          localStorage.setItem(`userImage_${this.userService.currentUser.id}`, this.userImage);
-          this.userService.userImageUpdatedSubject.next(); // emit the event
+        .then((image) => {
+          if(image){
+            localStorage.setItem(`userImage_${this.userService.currentUser.id}`,image);
+            this.userService.userImageUpdatedSubject.next(); // emit the event
+          }
         })
         .catch(error => {
           console.error('Failed to upload image', error);

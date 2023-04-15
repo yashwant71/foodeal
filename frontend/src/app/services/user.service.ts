@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subject, catchError, tap, throwError } from 'rxjs';
-import { USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL, USER_UPLOADIMG_URL } from '../shared/constants/urls';
+import { USER_GETIMG, USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL, USER_UPLOADIMG_URL } from '../shared/constants/urls';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { IUserRegister } from '../shared/interfaces/IUserRegister';
 import { User } from '../shared/models/User';
@@ -17,11 +17,12 @@ export class UserService {
   new BehaviorSubject<User>(this.getUserFromLocalStorage());
   public userObservable:Observable<User>;
 
-    // creating new subject for image uploaded notify to its subscriber (in our case its header)
-    public userImageUpdatedSubject = new Subject<void>();
-    userImageUpdated$ = this.userImageUpdatedSubject.asObservable();
-
+  // creating new subject for image uploaded notify to its subscriber (in our case its header)
+  public userImageUpdatedSubject = new Subject<void>();
+  userImageUpdated$ = this.userImageUpdatedSubject.asObservable();
+  userImageRetrieved: boolean;
   constructor(private http:HttpClient, private toastrService:ToastrService) {
+    this.userImageRetrieved = false;
     this.userObservable = this.userSubject.asObservable();
   }
 
@@ -38,7 +39,7 @@ export class UserService {
           this.toastrService.success(
             `Welcome to foodeal ${user.name}!`,
             'Login Successful'
-          )
+            )
         },
         error: (errorResponse) => {
           this.toastrService.error(errorResponse.error, 'Login Failed');
@@ -83,28 +84,33 @@ export class UserService {
       })
     )
   }
+  getUserImage(userId: string): Observable<Blob> {
+    return this.http.get(`${USER_GETIMG}/${userId}`, { responseType: 'blob' });
+  }
 
-  uploadUserImage(userId:string, selectedFile:File) {
+  uploadUserImage(userId: string, selectedFile: File) {
     const formData = new FormData();
     formData.append('image', selectedFile);
-    // console.log(userId, formData.get('image'));
-    // console.log(`${USER_UPLOADIMG_URL}/${userId}`);
 
     return fetch(`${USER_UPLOADIMG_URL}/${userId}`, {
       method: 'POST',
       body: formData,
-    }).then((response) => {
+    })
+      .then((response) => {
         if (!response.ok) {
           throw new Error('Error uploading image.');
-        } return response.json();})
-      .then((data) => {
-        this.toastrService.success(data.message);
+        }
+        return response.blob();
+      })
+      .then((imageBlob) => {
+        return URL.createObjectURL(imageBlob);
       })
       .catch((error) => {
-        this.toastrService.error(error.message);
-        throw error;
+        console.error(error);
+        throw error; // throw the error to be caught by the caller
       });
   }
+
 
 
   logout(){

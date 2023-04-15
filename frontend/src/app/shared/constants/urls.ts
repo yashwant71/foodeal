@@ -13,6 +13,7 @@ export const USER_LOGIN_URL = BASE_URL + '/api/users/login';
 export const USER_REGISTER_URL = BASE_URL + '/api/users/register';
 export const USER_UPDATE_URL = BASE_URL + '/api/users/update';
 export const USER_UPLOADIMG_URL = BASE_URL + '/api/users/uploadUserImage';
+export const USER_GETIMG = BASE_URL + '/api/users/getUserImage';
 
 export const ORDERS_URL = BASE_URL + '/api/orders';
 export const ORDER_CREATE_URL = ORDERS_URL + '/create';

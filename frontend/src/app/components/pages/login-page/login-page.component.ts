@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-login-page',
@@ -15,7 +17,8 @@ export class LoginPageComponent implements OnInit {
   constructor(private formBuilder: FormBuilder
     , private userService:UserService,
      private activatedRoute:ActivatedRoute,
-     private router:Router) { }
+     private router:Router,
+     private toastrService:ToastrService) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -36,8 +39,13 @@ export class LoginPageComponent implements OnInit {
 
     this.userService.login({email:this.fc.email.value,
        password: this.fc.password.value}).subscribe(() => {
-         this.router.navigateByUrl(this.returnUrl);
-         this.userService.userImageUpdatedSubject.next(); // emit the event to update user image 
+        //  this.userService.userImageUpdatedSubject.next(); // emit the event
+         this.router.events.subscribe((event) => {
+          if (event instanceof NavigationEnd) {
+            location.reload();
+          }
+        });
+        this.router.navigateByUrl(this.returnUrl);
        });
   }
 
