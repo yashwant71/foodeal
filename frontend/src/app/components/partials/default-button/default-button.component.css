@@ -13,13 +13,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  transition: color 0.5s ease-in;
+  transition: all 0.5s ease-in;
 }
 .btntext:hover{
   color: black;
+  font-weight: 900;
 }
 .c-button {
-  background-color: var(--hover-bg-color);
+  background-color: var(--btn-bg-color);
   text-decoration: none;
   cursor: pointer;
   display: inline-block;
@@ -53,7 +54,6 @@
 }
 
 .c-button--gooey .c-button__blobs div {
-  background-color: lightgreen;
   width: 34%;
   height: 100%;
   border-radius: 100%;
@@ -84,7 +84,7 @@
 .quantSpan{
   background: var(--hover-bg-color2);
   color: white;
-  padding: 0.1rem 0.45rem;
+  padding: 0.1rem 0.35rem;
   border-radius: 100rem;
   font-size:0.9rem;
 }

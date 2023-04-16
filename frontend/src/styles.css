@@ -23,12 +23,12 @@ a{
 }
 
 :root {
-  --hover-bg-color: #e72929;
+  --btn-bg-color: #e72929;
   --hover-bg-color2: #ff4d4d;
   --font-color1: #af1313;
-
-  --hover-bg-color: purple;
-  --hover-bg-color2: rgb(183, 91, 183);
+  
+  --btn-bg-color: rgb(130, 3, 130);
+  --hover-bg-color2: rgb(216, 139, 216);
   --font-color1: rgb(50, 2, 50);
 
 

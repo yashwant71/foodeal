@@ -1,12 +1,8 @@
 <div class="file-upload">
-  <button class="file-upload-btn" type="button" (click)="triggerClick()">Add {{ buttonText }}</button>
+  <!-- <button class="file-upload-btn" type="button" (click)="triggerClick()">Add {{ buttonText }}</button> -->
+  <default-button [text]="'Add ' + buttonText" [widthRem]="35" (click)="triggerClick()" [marginRem]="0"></default-button>
 
   <input #fileInput class="file-upload-input" id="file-input" type='file' (change)="onImageSelected($event)" accept="image/*" [hidden]="true" />
-  <!-- <div class="image-upload-wrap" *ngIf="!isImageSelected" (click)="triggerClick()">
-    <div class="drag-text">
-      <h3>select {{ buttonText }}</h3>
-    </div>
-  </div> -->
   <div class="file-upload-content" *ngIf="isImageSelected">
     <img class="file-upload-image" [src]="userImage" alt="Uploaded image" />
     <div class="image-title-wrap">

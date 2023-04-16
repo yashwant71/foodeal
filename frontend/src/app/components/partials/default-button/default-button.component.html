@@ -7,17 +7,18 @@
      'margin.rem':marginRem,
      'border-radius':borderRadRem,
      'height.rem':heightRem,
-     'padding':padding
+     'padding':padding,
+     'background-color':bgColor
    }"
    [type]="type"
    (click)="onClick.emit()"
    title="{{text}}"
    >
    <span class="btntext">{{text}}<span *ngIf="showQuant" class="quantSpan">{{QuantityVal}}</span></span>
-    <div class="c-button__blobs">
-      <div></div>
-      <div></div>
-      <div></div>
+    <div class="c-button__blobs" >
+      <div [ngStyle]="{'background-color':bgColorHover}" ></div>
+      <div [ngStyle]="{'background-color':bgColorHover}"></div>
+      <div [ngStyle]="{'background-color':bgColorHover}"></div>
     </div>
 
   </button>

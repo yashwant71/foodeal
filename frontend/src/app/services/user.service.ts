@@ -103,10 +103,15 @@ export class UserService {
         return response.blob();
       })
       .then((imageBlob) => {
+        this.toastrService.success(
+          'image uploaded Successfully'
+        )
         return URL.createObjectURL(imageBlob);
       })
       .catch((error) => {
         console.error(error);
+        this.toastrService.error(error,
+          'upload Failed')
         throw error; // throw the error to be caught by the caller
       });
   }
