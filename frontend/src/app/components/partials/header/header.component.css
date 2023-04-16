@@ -2,7 +2,7 @@ header{
   position: relative;
   background: white;
   padding: 0;
-  border-bottom: 1px solid var(--hover-bg-color);
+  border-bottom: 1px solid var(--btn-bg-color);
 }
 
 a{
@@ -11,7 +11,7 @@ a{
 }
 
 a:hover{
-  background: var(--hover-bg-color);
+  background: var(--btn-bg-color);
   color: white;
   cursor: pointer;
 }
