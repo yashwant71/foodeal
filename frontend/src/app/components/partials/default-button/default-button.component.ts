@@ -12,13 +12,23 @@ export class DefaultButtonComponent implements OnInit {
   @Input()
   text:string = 'Submit';
   @Input()
-  bgColor = '#e72929';
+  marginRem = 1;
+  @Input()
+  padding:string = "1.2em 3.4em"
+  @Input()
+  borderRadRem:string = "0.8";
   @Input()
   color = 'white';
   @Input()
   fontSizeRem = 1.3;
   @Input()
   widthRem = 12;
+  @Input()
+  heightRem = 3.5;
+  @Input()
+  showQuant = 0;
+  @Input()
+  QuantityVal = 0;
   @Output()
   onClick = new EventEmitter();
   constructor() { }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
 import { Cart } from 'src/app/shared/models/Cart';
 import { CartItem } from 'src/app/shared/models/CartItem';
@@ -10,7 +11,7 @@ import { CartItem } from 'src/app/shared/models/CartItem';
 })
 export class CartPageComponent implements OnInit {
   cart!: Cart;
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService,private router: Router) {
     this.cartService.getCartObservable().subscribe((cart) => {
       this.cart = cart;
     })
@@ -18,7 +19,9 @@ export class CartPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  proceedToCheckout() {
+    this.router.navigate(['/checkout']);
+  }
   removeFromCart(cartItem:CartItem){
     this.cartService.removeFromCart(cartItem.food.id);
   }

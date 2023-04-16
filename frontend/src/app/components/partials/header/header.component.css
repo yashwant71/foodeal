@@ -2,15 +2,16 @@ header{
   position: relative;
   background: white;
   padding: 0;
-  border-bottom: 1px solid #e72929;
+  border-bottom: 1px solid var(--hover-bg-color);
 }
 
 a{
-  color: #af1313;
+  color:var(--font-color1);
+  transition: all 0.3s ease;
 }
 
 a:hover{
-  background:#e72929;
+  background: var(--hover-bg-color);
   color: white;
   cursor: pointer;
 }
@@ -38,7 +39,7 @@ ul a{
 }
 
 a span{
-  background: #ff4d4d;
+  background: var(--hover-bg-color2);
   color: white;
   padding: 0.1rem 0.45rem;
   border-radius: 100rem;
@@ -50,6 +51,7 @@ a span{
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 1rem;
 }
 
 .menu-container img{
@@ -65,7 +67,7 @@ a span{
   z-index:1;
   background:whitesmoke;
   display: none;
-  top: 50px;
+  top: 57px;
   right: -80px;
 }
 

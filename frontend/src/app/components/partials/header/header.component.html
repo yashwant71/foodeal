@@ -1,25 +1,22 @@
 
 <header>
   <div class="container">
-    <a routerLink="/" class="logo" title="Welcome to foodeal">Foodea!</a>
+    <default-button text="FoodeaL" [widthRem]="10" (click)="goToHome()" [marginRem]="0" borderRadRem="0"></default-button>
     <nav>
       <ul>
         <li *ngIf="!isAuth">
-          <a routerLink="/login">Login</a>
+          <default-button text="Login" [widthRem]="0" (click)="goToLogin()" [marginRem]="0" borderRadRem="0"></default-button>
         </li>
         <li *ngIf="isAuth" class="menu-container">
             <img *ngIf="!userImage" src="assets/user.png" width="40" [title]="user.name">
             <img *ngIf="userImage" [src]="userImage" width="40" [title]="user.name">
           <div class="menu">
-            <a routerLink="/profile" title="profile">Profile</a>
-            <!-- <a routerLink="/orders" title="orders">Orders</a> -->
-            <a (click)="logout()">Logout</a>
+            <default-button text="Profile" [widthRem]="1" (click)="goToProfile()" [marginRem]="0" borderRadRem="0"></default-button>
+            <default-button text="Logout" [widthRem]="1" (click)="logout()" [marginRem]="0" borderRadRem="0"></default-button>
           </div>
         </li>
         <li>
-          <a routerLink="/cart-page" title="{{cartQuantity}} items in cart ">
-            Cart <span *ngIf="cartQuantity">{{cartQuantity}}</span>
-          </a>
+          <default-button text="Cart" [widthRem]="1" (click)="goToCart()" [marginRem]="0" borderRadRem="0" [showQuant]="cartQuantity" [QuantityVal]="cartQuantity"></default-button>
         </li>
       </ul>
     </nav>

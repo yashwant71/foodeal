@@ -3,6 +3,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/shared/models/User';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit {
   user!:User;
   userImage: SafeUrl | null = null;
   selectedFile: File | null = null;
-  constructor(cartService:CartService,private userService:UserService,private sanitizer: DomSanitizer) {
+  constructor(cartService:CartService,private userService:UserService,private sanitizer: DomSanitizer,private router: Router) {
     cartService.getCartObservable().subscribe((newCart) => {
       this.cartQuantity = newCart.totalCount;
     })
@@ -54,6 +55,18 @@ export class HeaderComponent implements OnInit {
         }
       })
     }
+  }
+  goToHome() {
+    this.router.navigate(['/']);
+  }
+  goToCart() {
+    this.router.navigate(['/cart-page']);
+  }
+  goToProfile(){
+    this.router.navigate(['/profile']);
+  }
+  goToLogin(){
+    this.router.navigate(['/login']);
   }
   getUserImagefromBackend(){
     this.userService.getUserImage(this.userService.currentUser.id).subscribe(image => {

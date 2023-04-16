@@ -43,6 +43,8 @@
     <div class="total-price">{{cart.totalPrice|currency}}</div>
   </div>
 
-  <a routerLink="/checkout">Proceed to Checkout</a>
+  <!-- <a routerLink="/checkout"></a> -->
+  <default-button text="Proceed to Checkout" [widthRem]="20" (click)="proceedToCheckout()"></default-button>
+
 </div>
 </div>
