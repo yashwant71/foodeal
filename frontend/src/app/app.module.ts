@@ -32,6 +32,7 @@ import { PaypalButtonComponent } from './components/partials/paypal-button/paypa
 import { OrderTrackPageComponent } from './components/pages/order-track-page/order-track-page.component';
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { ImageUploadComponent } from './components/partials/image-upload/image-upload.component';
+import { GoogleLoginComponent } from './components/partials/google-login/google-login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +58,8 @@ import { ImageUploadComponent } from './components/partials/image-upload/image-u
     PaypalButtonComponent,
     OrderTrackPageComponent,
     ProfileComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
+    GoogleLoginComponent
   ],
   imports: [
     BrowserModule,

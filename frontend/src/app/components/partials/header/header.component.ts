@@ -3,7 +3,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/shared/models/User';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -66,7 +66,12 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/profile']);
   }
   goToLogin(){
-    this.router.navigate(['/login']);
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        location.reload();
+      }
+    });
+    this.router.navigateByUrl('/login');
   }
   getUserImagefromBackend(){
     this.userService.getUserImage(this.userService.currentUser.id).subscribe(image => {

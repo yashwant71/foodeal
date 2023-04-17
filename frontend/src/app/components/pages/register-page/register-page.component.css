@@ -14,4 +14,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0.5rem 0 1rem 0;
+  cursor: pointer;
+  font-weight: 500;
+}
+.login:hover{
+  color: var(--btn-bg-color);
 }

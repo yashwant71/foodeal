@@ -21,7 +21,14 @@ form{
 }
 
 .register{
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0.8rem;
+  font-weight: 500;
+}
+
+.register:hover{
+  color: var(--btn-bg-color);
 }

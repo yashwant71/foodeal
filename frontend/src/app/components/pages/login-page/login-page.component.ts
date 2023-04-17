@@ -32,7 +32,14 @@ export class LoginPageComponent implements OnInit {
   get fc(){
     return this.loginForm.controls;
   }
-
+  goToRegister(){
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        location.reload();
+      }
+    });
+    this.router.navigateByUrl('/register');
+  }
   submit(){
     this.isSubmitted = true;
     if(this.loginForm.invalid) return;

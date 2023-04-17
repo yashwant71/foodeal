@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { CredentialResponse } from 'google-one-tap';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subject, catchError, tap, throwError } from 'rxjs';
-import { USER_GETIMG, USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL, USER_UPLOADIMG_URL } from '../shared/constants/urls';
+import { USER_GETIMG, USER_LOGINGOOGLE_URL, USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL, USER_UPLOADIMG_URL } from '../shared/constants/urls';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { IUserRegister } from '../shared/interfaces/IUserRegister';
 import { User } from '../shared/models/User';
@@ -32,6 +33,24 @@ export class UserService {
 
   login(userLogin:IUserLogin):Observable<User>{
     return this.http.post<User>(USER_LOGIN_URL, userLogin).pipe(
+      tap({
+        next: (user) =>{
+          this.setUserToLocalStorage(user);
+          this.userSubject.next(user);
+          this.toastrService.success(
+            `Welcome to foodeal ${user.name}!`,
+            'Login Successful'
+            )
+        },
+        error: (errorResponse) => {
+          this.toastrService.error(errorResponse.error, 'Login Failed');
+        }
+      })
+    );
+  }
+  LoginWithGoogle(response: any): Observable<User> {
+    const header = new HttpHeaders().set('Content-type', 'application/json');
+    return this.http.post<User>(USER_LOGINGOOGLE_URL, response, { headers: header, withCredentials: true }).pipe(
       tap({
         next: (user) =>{
           this.setUserToLocalStorage(user);

@@ -10,6 +10,13 @@ import multer, { Multer } from 'multer';
 import * as fs from 'fs';
 import * as glob from 'glob';
 import mime from 'mime-types';
+import { GoogleAuth, GoogleAuthOptions, TokenPayload ,OAuth2Client } from 'google-auth-library';
+import dotenv from 'dotenv';
+import { JSONClient } from 'google-auth-library/build/src/auth/googleauth';
+dotenv.config();
+
+import * as https from 'https';
+
 /// Created an instance of Multer to handle file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -80,8 +87,9 @@ router.post("/login", asyncHandler(
   async (req, res) => {
     const {email, password} = req.body;
     const user = await UserModel.findOne({email});
-  
-     if(user && (await bcrypt.compare(password,user.password))) {
+     if(user && !user.password){
+      res.status(HTTP_BAD_REQUEST).send("user doesnt exist, login with google");
+     }else if(user && (await bcrypt.compare(password,user.password))) {
       res.send(generateTokenReponse(user));
      }
      else{
@@ -90,7 +98,60 @@ router.post("/login", asyncHandler(
   
   }
 ))
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+router.post('/loginwithgoogle', asyncHandler(async (req, res) => {
+  const { credential } = req.body;
+  const ticket = await client.verifyIdToken({
+    idToken: credential,
+    audience: process.env.GOOGLE_CLIENT_ID,
+  });
+  const paydata = ticket.getPayload() as TokenPayload;
+  //paydata.name ,paydata.email ,paydata.picture , save it in db and backend and return 
+  const user = await UserModel.findOne({email:paydata.email});
+  if(user){// then we will return that user's data 
+    res.send(generateTokenReponse(user));
+  }else{// we will create a new user data 
+    const newUser = {
+      email:paydata.email,
+      name:paydata.name,
+      isAdmin:false,
+      address:''
+    }
+    const dbUser = await UserModel.create(newUser);
+    console.log(paydata)
+    // download the image
+    const imageUrl = paydata.picture;
   
+    // Make an HTTP request to the image URL
+    if(imageUrl){
+      const imagePath = `uploads/user/${dbUser.id}`;
+      
+      https.get(imageUrl, (response) => {
+        const contentType = response.headers['content-type'];
+        const fileExtension = contentType ? contentType.split('/').pop() : 'jpg';
+        const fileName = `${imagePath}.${fileExtension}`;
+        const file = fs.createWriteStream(fileName);
+    
+        response.pipe(file);
+    
+        file.on('finish', () => {
+          file.close();
+          console.log(`Image saved as ${fileName}`);
+          res.send(generateTokenReponse(dbUser));
+
+        });
+    
+        file.on('error', (error) => {
+          res.status(HTTP_BAD_REQUEST).send("image not saved for user");
+        });
+      }).on('error', (error) => {
+        console.error(`Error downloading image: ${error}`);
+      });
+
+    }
+  }
+}));
 router.post('/register', asyncHandler(
   async (req, res) => {
     const {name, email, password, address} = req.body;

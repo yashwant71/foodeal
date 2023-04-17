@@ -19,9 +19,10 @@
 </text-input>
 
     <default-button text="Login"></default-button>
-    <div class="register">
+    <google-login></google-login>
+    <div class="register" (click)="goToRegister()">
       New user? &nbsp;
-      <a routerLink="/register" [queryParams]="{returnUrl : returnUrl}">
+      <a >
         Register here
       </a>
     </div>

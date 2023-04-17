@@ -39,13 +39,13 @@ label="Address">
 
 <default-button text="Register"></default-button>
 
-<div class="login">
+<google-login></google-login>
+<div class="login" (click)="goToLogin()">
   Already a user? &nbsp;
-  <a routerLink="/login" [queryParams]="{returnUrl: returnUrl}">
+  <a  >
     Login Here
   </a>
 </div>
-
 
     </form>
   </div>
