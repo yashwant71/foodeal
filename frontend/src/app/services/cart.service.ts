@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Cart } from '../shared/models/Cart';
 import { CartItem } from '../shared/models/CartItem';
 import { Food } from '../shared/models/Food';
+import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+import { CART_ADD_URL, CART_UPDATE_URL, CART_URL } from '../shared/constants/urls';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +14,26 @@ import { Food } from '../shared/models/Food';
 export class CartService {
   private cart: Cart = this.getCartFromLocalStorage();
   private cartSubject: BehaviorSubject<Cart> = new BehaviorSubject(this.cart);
-  constructor() { }
+  private hasFetchedCartData = false;
+
+  constructor(private http: HttpClient, private toastrService: ToastrService, private userService: UserService) {
+    // Check if cart data has already been fetched from API
+    if (!this.hasFetchedCartData) {
+        // Fetch cart data from API
+        this.fetchCartData().subscribe(cart => {
+            this.cart = cart;
+            this.cartSubject.next(this.cart);
+        });
+        this.hasFetchedCartData = true;
+    }
+  }
+
+  private fetchCartData(): Observable<Cart> {
+      // Make API call to fetch cart data
+      const userId = this.userService.currentUser.id;
+      return this.http.get<Cart>(CART_URL+'/'+userId)
+  }
+
 
   addToCart(food: Food): void {
     let cartItem = this.cart.items
@@ -57,9 +80,28 @@ export class CartService {
     this.cart.totalCount = this.cart.items
       .reduce((prevSum, currentItem) => prevSum + currentItem.quantity, 0);
 
-    const cartJson = JSON.stringify(this.cart);
-    localStorage.setItem('Cart', cartJson);
-    this.cartSubject.next(this.cart);
+    // Send the updated cart to the backend
+    console.log(this.userService.currentUser)
+    fetch(CART_UPDATE_URL+'/'+this.userService.currentUser.id, {
+      method: 'POST',
+      body: JSON.stringify(this.cart),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(updatedCart => {
+      // Save the updated cart to localStorage if the backend call is successful
+      const cartJson = JSON.stringify(updatedCart);
+      localStorage.setItem('Cart', cartJson);
+      this.cartSubject.next(updatedCart);
+    })
+    .catch(error => {
+      // Handle any errors from the backend call
+      console.log(error)
+      this.toastrService.error('Failed to update cart on the server');
+    });
+
   }
 
   private getCartFromLocalStorage(): Cart {

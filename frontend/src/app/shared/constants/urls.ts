@@ -22,3 +22,10 @@ export const ORDERS_GET = ORDERS_URL + '/getOrders';
 export const ORDER_NEW_FOR_CURRENT_USER_URL = ORDERS_URL + '/newOrderForCurrentUser';
 export const ORDER_PAY_URL = ORDERS_URL + '/pay';
 export const ORDER_TRACK_URL = ORDERS_URL + '/track/';
+
+
+export const CART_URL = BASE_URL + '/api/cart';
+export const CART_UPDATE_URL = CART_URL + '/updateCart'
+export const CART_ADD_URL = CART_URL + '/addItem'
+export const CART_REMOVE_URL = CART_URL + '/removeItem'
+export const CART_CLEAR_URL = CART_URL + '/clear'
