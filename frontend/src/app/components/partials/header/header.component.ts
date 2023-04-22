@@ -73,6 +73,9 @@ export class HeaderComponent implements OnInit {
     });
     this.router.navigateByUrl('/login');
   }
+  goToOrders(){
+    this.router.navigate(['/orders']);
+  }
   getUserImagefromBackend(){
     this.userService.getUserImage(this.userService.currentUser.id).subscribe(image => {
       let reader = new FileReader();

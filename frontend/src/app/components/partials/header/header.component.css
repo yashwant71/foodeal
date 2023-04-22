@@ -31,6 +31,7 @@ ul{
   display: flex;
   list-style-type: none;
   margin: 0;
+  padding: 0;
 }
 
 ul a{
@@ -52,6 +53,7 @@ a span{
   justify-content: center;
   align-items: center;
   padding: 0 1rem;
+  z-index: 1000;
 }
 
 .menu-container img{

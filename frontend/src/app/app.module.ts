@@ -33,6 +33,7 @@ import { OrderTrackPageComponent } from './components/pages/order-track-page/ord
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { ImageUploadComponent } from './components/partials/image-upload/image-upload.component';
 import { GoogleLoginComponent } from './components/partials/google-login/google-login.component';
+import { OrdersComponent } from './components/pages/orders/orders.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +60,8 @@ import { GoogleLoginComponent } from './components/partials/google-login/google-
     OrderTrackPageComponent,
     ProfileComponent,
     ImageUploadComponent,
-    GoogleLoginComponent
+    GoogleLoginComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,

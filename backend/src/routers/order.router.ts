@@ -27,7 +27,11 @@ asyncHandler(async (req:any, res:any) => {
     res.send(newOrder);
 })
 )
-
+router.get('/getOrders',asyncHandler(async(req:any,res) => {
+    const orders = await OrderModel.find({user:req.user.id});
+    if(orders) res.send(orders);
+    else res.status(HTTP_BAD_REQUEST).send();
+}))
 
 router.get('/newOrderForCurrentUser', asyncHandler( async (req:any,res ) => {
     const order= await getNewOrderForCurrentUser(req);

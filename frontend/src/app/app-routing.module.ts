@@ -1,3 +1,4 @@
+import { OrdersComponent } from './components/pages/orders/orders.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/guards/auth.guard';
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path:'checkout', component: CheckoutPageComponent, canActivate:[AuthGuard]},
   {path:'payment', component: PaymentPageComponent, canActivate:[AuthGuard]},
   {path:'track/:orderId', component: OrderTrackPageComponent, canActivate:[AuthGuard]},
-  {path:'profile',component:ProfileComponent}
+  {path:'profile',component:ProfileComponent},
+  {path:'orders',component:OrdersComponent}
 
 ];
 

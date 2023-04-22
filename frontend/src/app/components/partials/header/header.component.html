@@ -12,6 +12,7 @@
             <img *ngIf="userImage" [src]="userImage" width="40" [title]="user.name">
           <div class="menu">
             <default-button text="Profile" [widthRem]="1" (click)="goToProfile()" [marginRem]="0" borderRadRem="0"></default-button>
+            <default-button text="Orders" [widthRem]="1" (click)="goToOrders()" [marginRem]="0" borderRadRem="0"></default-button>
             <default-button text="Logout" [widthRem]="1" (click)="logout()" [marginRem]="0" borderRadRem="0"></default-button>
           </div>
         </li>

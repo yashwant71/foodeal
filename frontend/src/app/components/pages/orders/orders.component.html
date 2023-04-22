@@ -1,0 +1,32 @@
+<app-title title="My Orders" margin="1.5rem 0 0 2.5rem"></app-title>
+<app-not-found
+  [visible]="!orders || !orders.length"
+  notFoundMessage="No Orders Found!"
+  resetLinkText="Go To Homepage"
+></app-not-found>
+
+<div *ngIf="orders && orders.length" class="container">
+  <ul *ngFor="let order of orders">
+    <li class="items">
+      <span *ngFor="let orderitem of order.items">
+        <div>
+          <img [src]="orderitem.food.imageUrl" [alt]="orderitem.food.name">
+        </div>
+        <div>
+          <a routerLink="/food/{{orderitem.food.id}}">
+            {{orderitem.food.name}}
+          </a>
+        </div>
+        <div title="quantity">
+          {{orderitem.quantity}}
+        </div>
+        <div title="total price">
+          {{orderitem.price | currency}}
+        </div>
+      </span>
+    </li>
+    <li class="itemsInfo">
+      <default-button text="Order Details" [widthRem]="15" [marginRem]="0" (click)="goToTrackOrder(order.id)"></default-button>
+    </li>
+  </ul>
+</div>

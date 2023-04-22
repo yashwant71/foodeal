@@ -25,6 +25,7 @@ a{
 :root {
   --btn-bg-color: rgb(130, 3, 130);
   --hover-bg-color2: rgb(216, 139, 216);
+  --very-light-bg: rgb(235, 220, 235);
   --font-color1: rgb(50, 2, 50);
 
 }

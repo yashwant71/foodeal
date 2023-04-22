@@ -18,6 +18,7 @@ export const USER_GETIMG = BASE_URL + '/api/users/getUserImage';
 
 export const ORDERS_URL = BASE_URL + '/api/orders';
 export const ORDER_CREATE_URL = ORDERS_URL + '/create';
+export const ORDERS_GET = ORDERS_URL + '/getOrders';
 export const ORDER_NEW_FOR_CURRENT_USER_URL = ORDERS_URL + '/newOrderForCurrentUser';
 export const ORDER_PAY_URL = ORDERS_URL + '/pay';
 export const ORDER_TRACK_URL = ORDERS_URL + '/track/';
