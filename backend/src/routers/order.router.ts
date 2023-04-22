@@ -28,7 +28,7 @@ asyncHandler(async (req:any, res:any) => {
 })
 )
 router.get('/getOrders',asyncHandler(async(req:any,res) => {
-    const orders = await OrderModel.find({user:req.user.id});
+    const orders = await OrderModel.find({user:req.user.id,status:"PAYED"}).sort({ createdAt: -1 });
     if(orders) res.send(orders);
     else res.status(HTTP_BAD_REQUEST).send();
 }))
