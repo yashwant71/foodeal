@@ -3,8 +3,16 @@ header{
   background: white;
   padding: 0;
   border-bottom: 1px solid var(--btn-bg-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  opacity: 0.9;
 }
-
+.blanktop{
+  padding: 1.3rem;
+}
 a{
   color:var(--font-color1);
   transition: all 0.3s ease;
