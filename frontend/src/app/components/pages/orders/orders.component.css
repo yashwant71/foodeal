@@ -4,7 +4,7 @@
 }
 
 ul{
-  border: 1px solid var(--hover-bg-color2);
+  border: 2px solid var(--very-light-bg);
   border-radius: 1rem;
   padding: 0;
   transition: all 0.3s ease-out;
