@@ -18,13 +18,13 @@ export class CartService {
 
   constructor(private http: HttpClient, private toastrService: ToastrService, private userService: UserService) {
     // Check if cart data has already been fetched from API
-    if (!this.hasFetchedCartData) {
-        // Fetch cart data from API
-        this.fetchCartData().subscribe(cart => {
-            this.cart = cart;
-            this.cartSubject.next(this.cart);
-        });
+    if (this.userService.currentUser.id && !this.hasFetchedCartData) {
+      // Fetch cart data from API if the user is already logged in
+      this.fetchCartData().subscribe(cart => {
+        this.cart = cart;
+        this.cartSubject.next(this.cart);
         this.hasFetchedCartData = true;
+      });
     }
   }
 
