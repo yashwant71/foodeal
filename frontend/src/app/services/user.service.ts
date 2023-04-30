@@ -2,8 +2,8 @@ import { CredentialResponse } from 'google-one-tap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, Subject, catchError, tap, throwError } from 'rxjs';
-import { USER_GETIMG, USER_LOGINGOOGLE_URL, USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL, USER_UPLOADIMG_URL } from '../shared/constants/urls';
+import { BehaviorSubject, Observable, Subject, catchError, from, tap, throwError } from 'rxjs';
+import { FOOD_FAVORITE_URL, USER_GETIMG, USER_LOGINGOOGLE_URL, USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL, USER_UPLOADIMG_URL } from '../shared/constants/urls';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { IUserRegister } from '../shared/interfaces/IUserRegister';
 import { User } from '../shared/models/User';
@@ -152,5 +152,28 @@ export class UserService {
     const userJson = localStorage.getItem(USER_KEY);
     if(userJson) return JSON.parse(userJson) as User;
     return new User();
+  }
+
+
+  toggleFavorite(foodId:string,userId:string) {
+    return from(
+      fetch(`${FOOD_FAVORITE_URL}/${foodId}/${userId}`)
+        .then((response) => {
+          if (response.ok) {return response.json();} else {throw new Error(response.statusText);}
+        })
+        .then((data) => {
+          if (data.message)
+            this.toastrService.success(data.message);
+          if (data.user) {
+            this.setUserToLocalStorage(data.user);
+            this.userSubject.next(data.user);
+          }
+          return data.message;
+        })
+        .catch((error) => {
+          this.toastrService.error(error.message, 'favorite Failed');
+          throw error;
+        })
+    );
   }
 }

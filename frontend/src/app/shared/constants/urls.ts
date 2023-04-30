@@ -16,6 +16,8 @@ export const USER_UPDATE_URL = BASE_URL + '/api/users/update';
 export const USER_UPLOADIMG_URL = BASE_URL + '/api/users/uploadUserImage';
 export const USER_GETIMG = BASE_URL + '/api/users/getUserImage';
 
+export const FOOD_FAVORITE_URL = BASE_URL + '/api/users/favFood'
+
 export const ORDERS_URL = BASE_URL + '/api/orders';
 export const ORDER_CREATE_URL = ORDERS_URL + '/create';
 export const ORDERS_GET = ORDERS_URL + '/getOrders';

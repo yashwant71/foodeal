@@ -7,6 +7,7 @@ export interface User{
     name:string;
     address:string;
     isAdmin:boolean;
+    favFood?: string[];
 }
 
 export const UserSchema = new Schema<User>({
@@ -14,7 +15,8 @@ export const UserSchema = new Schema<User>({
     email: {type: String, required: true, unique: true},
     password: {type: String},
     address: {type: String},
-    isAdmin: {type: Boolean, required: true}
+    isAdmin: {type: Boolean, required: true},
+    favFood: { type: [String], default: [] }
 }, {
     timestamps: true,
     toJSON:{

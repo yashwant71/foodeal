@@ -206,22 +206,56 @@ router.post('/update', asyncHandler(
   }
 ))
 
-  const generateTokenReponse = (user : User) => {
-    const token = jwt.sign({
-      id: user.id, email:user.email, isAdmin: user.isAdmin
-    },process.env.JWT_SECRET!,{
-      expiresIn:"30d"
-    });
-  
-    return {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      address: user.address,
-      isAdmin: user.isAdmin,
-      token: token
-    };
+router.get('/favFood/:foodId/:userId', asyncHandler(
+  async (req:any, res) => {
+    
+    const { foodId } = req.params;
+    const { userId } = req.params;
+    const user = await UserModel.findById(userId);
+    if(user){
+      const favFood = user.favFood || [];
+      const index = favFood.indexOf(foodId);
+      
+      if (index !== -1) {
+        // If the foodId already exists in the favFood array, remove it
+        console.log(index)
+        favFood.splice(index, 1);
+      } else {
+        // If the foodId does not exist in the favFood array, add it
+        favFood.push(foodId);
+      }
+      
+      user.favFood = favFood;
+      const updatedUser =await user.save();
+      
+      if (index !== -1) {
+        res.json({ user: generateTokenReponse(updatedUser),message: 'Removed from favorites' });
+      } else {
+        res.json({ user: generateTokenReponse(updatedUser),message: 'Added to favorites' });
+      }
+    }else{
+      res.status(HTTP_BAD_REQUEST).send('login to update');
+    }
   }
-  
+))
 
-  export default router;
+const generateTokenReponse = (user : User) => {
+  const token = jwt.sign({
+    id: user.id, email:user.email, isAdmin: user.isAdmin
+  },process.env.JWT_SECRET!,{
+    expiresIn:"30d"
+  });
+
+  return {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    address: user.address,
+    isAdmin: user.isAdmin,
+    token: token,
+    favFood :user.favFood
+  };
+}
+
+
+export default router;
