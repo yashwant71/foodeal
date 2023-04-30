@@ -34,6 +34,7 @@ import { ProfileComponent } from './components/pages/profile/profile.component';
 import { ImageUploadComponent } from './components/partials/image-upload/image-upload.component';
 import { GoogleLoginComponent } from './components/partials/google-login/google-login.component';
 import { OrdersComponent } from './components/pages/orders/orders.component';
+import { FooterComponent } from './components/partials/footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +62,8 @@ import { OrdersComponent } from './components/pages/orders/orders.component';
     ProfileComponent,
     ImageUploadComponent,
     GoogleLoginComponent,
-    OrdersComponent
+    OrdersComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

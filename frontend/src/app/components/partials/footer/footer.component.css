@@ -1,0 +1,16 @@
+.container{
+  border-top: 1px solid var(--hover-bg-color2);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+}
+.links{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.links a{
+  padding: 0.3rem;
+}
