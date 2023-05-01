@@ -1,4 +1,5 @@
 <div *ngIf="tags">
+  <a routerLink="/favorites" title="❤">❤</a>
   <a *ngFor="let tag of tags" routerLink="/tag/{{tag.name}}" title="{{tag.count}} items of {{tag.name}}">
     {{tag.name}} {{tag.count}}
   </a>

@@ -19,19 +19,32 @@ export class HomeComponent implements OnInit {
   constructor(private foodService: FoodService, activatedRoute: ActivatedRoute,private userService:UserService) {
     let foodsObservable:Observable<Food[]>;
     this.user = this.userService.currentUser
-    activatedRoute.params.subscribe((params) => {
-      if (params.searchTerm)
-        foodsObservable = this.foodService.getAllFoodsBySearchTerm(params.searchTerm);
-      else if (params.tag)
-        foodsObservable = this.foodService.getAllFoodsByTag(params.tag);
-      else
-        foodsObservable = foodService.getAll();
+    activatedRoute.url.subscribe((url) => {
+      if (url.length > 0 && url[0].path === "favorites") {
 
+        foodsObservable = foodService.getAll();
         foodsObservable.subscribe((serverFoods) => {
-          this.foods = serverFoods;
-        })
-    })
+          this.foods = serverFoods.filter(food => this.user?.favFood?.includes(food.id));
+        });
+      } else {
+        
+        activatedRoute.params.subscribe((params) => {
+          let foodsObservable;
+          if (params.searchTerm)
+            foodsObservable = this.foodService.getAllFoodsBySearchTerm(params.searchTerm);
+          else if (params.tag)
+            foodsObservable = this.foodService.getAllFoodsByTag(params.tag);
+          else
+            foodsObservable = foodService.getAll();
+
+          foodsObservable.subscribe((serverFoods) => {
+            this.foods = serverFoods;
+          });
+        });
+      }
+    });
   }
+
 
   ngOnInit(): void {
   }
