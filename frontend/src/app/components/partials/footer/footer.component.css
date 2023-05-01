@@ -1,5 +1,5 @@
 .container{
-  border-top: 1px solid var(--hover-bg-color2);
+  border-top: 1px solid var(--col2);
   display: flex;
   justify-content: space-around;
   align-items: center;

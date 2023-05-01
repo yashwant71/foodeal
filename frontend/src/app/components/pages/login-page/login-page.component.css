@@ -30,5 +30,5 @@ form{
 }
 
 .register:hover{
-  color: var(--btn-bg-color);
+  color: var(--col1);
 }

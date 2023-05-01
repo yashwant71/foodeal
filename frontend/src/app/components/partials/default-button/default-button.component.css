@@ -20,7 +20,7 @@
   font-weight: 900;
 }
 .c-button {
-  background-color: var(--btn-bg-color);
+  background-color: var(--col1);
   text-decoration: none;
   cursor: pointer;
   display: inline-block;
@@ -82,7 +82,7 @@
 }
 
 .quantSpan{
-  background: var(--hover-bg-color2);
+  background: var(--col2);
   color: white;
   padding: 0.1rem 0.35rem;
   border-radius: 100rem;

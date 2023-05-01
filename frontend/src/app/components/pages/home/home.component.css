@@ -16,7 +16,7 @@ li a{
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  color: #e72929;
+  color: red;
 }
 
 li a:hover{
@@ -40,11 +40,15 @@ li a img{
   position: absolute;
   top: 0.5rem;
   right: 1rem;
+  color: red;
   font-size: 1.2rem;
+  background: var(--col3);
+  border-radius: 34px;
+  padding: 0px 3px;
 }
 
 .favorite.not{
-  color: grey;
+  color: gray;
 }
 
 .stars{

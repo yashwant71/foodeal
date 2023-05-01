@@ -2,7 +2,7 @@ header{
   position: relative;
   background: white;
   padding: 0;
-  border-bottom: 1px solid var(--btn-bg-color);
+  border-bottom: 1px solid var(--col1);
   position: fixed;
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@ a{
 }
 
 a:hover{
-  background: var(--btn-bg-color);
+  background: var(--col1);
   color: white;
   cursor: pointer;
 }
@@ -48,7 +48,7 @@ ul a{
 }
 
 a span{
-  background: var(--hover-bg-color2);
+  background: var(--col2);
   color: white;
   padding: 0.1rem 0.45rem;
   border-radius: 100rem;

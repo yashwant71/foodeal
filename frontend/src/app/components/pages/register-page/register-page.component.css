@@ -19,5 +19,5 @@
   font-weight: 500;
 }
 .login:hover{
-  color: var(--btn-bg-color);
+  color: var(--col1);
 }

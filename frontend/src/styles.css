@@ -10,7 +10,7 @@
 
 ::-webkit-scrollbar-thumb {
   min-height: 40px;
-  background-color: var(--hover-bg-color2);
+  background-color: var(--col2);
   border-radius: 100px;
   border: 3px solid #f1f1f1;
 }
@@ -36,9 +36,9 @@ a{
 }
 
 :root {
-  --btn-bg-color: rgb(130, 3, 130);
-  --hover-bg-color2: rgb(216, 139, 216);
-  --very-light-bg: rgb(235, 220, 235);
+  --col1: rgb(130, 3, 130);
+  --col2: rgb(216, 139, 216);
+  --col3: rgb(235, 220, 235);
   --font-color1: rgb(50, 2, 50);
 
 }

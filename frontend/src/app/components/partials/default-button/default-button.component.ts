@@ -20,9 +20,9 @@ export class DefaultButtonComponent implements OnInit {
   @Input()
   color = 'white';
   @Input()
-  bgColor:string = 'var(--btn-bg-color)';
+  bgColor:string = 'var(--col1)';
   @Input()
-  bgColorHover:string = 'var(--hover-bg-color2)'
+  bgColorHover:string = 'var(--col2)'
   @Input()
   fontSizeRem = 1.3;
   @Input()
