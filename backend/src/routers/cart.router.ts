@@ -3,12 +3,17 @@ import { CartModel } from '../models/cart.model';
 import asyncHandler from 'express-async-handler';
 const router = Router();
 
-router.get("/:userId",asyncHandler(async (req, res) => {
-    const userId = req.params.userId;
-      const cart = await CartModel.findOne({user:userId});
-        res.send(cart);
-}))
-
+router.get("/:userId", asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  const cart = await CartModel.findOne({ user: userId });
+  if (!cart) {// creating dummy cart if doesnt exists
+    const newCart = new CartModel({ user: userId ,items:[],totalCount:0,totalPrice:0});
+    await newCart.save();
+    res.send(newCart);
+  } else {
+    res.send(cart);
+  }
+}));
 
 router.post('/updateCart/:userId',
 asyncHandler(async (req:any, res:any) => {

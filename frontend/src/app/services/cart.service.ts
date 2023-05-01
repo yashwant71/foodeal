@@ -38,9 +38,9 @@ export class CartService {
   addToCart(food: Food): void {
     let cartItem = this.cart.items
       .find(item => item.food.id === food.id);
-    if (cartItem)
-      return;
-
+    if (cartItem) return;
+    // deleting image for now for payload
+    delete food.image;
     this.cart.items.push(new CartItem(food));
     this.setCartToLocalStorage();
   }
@@ -79,7 +79,6 @@ export class CartService {
       .reduce((prevSum, currentItem) => prevSum + currentItem.price, 0);
     this.cart.totalCount = this.cart.items
       .reduce((prevSum, currentItem) => prevSum + currentItem.quantity, 0);
-
     // Send the updated cart to the backend
     if(this.userService && this.userService.currentUser && this.userService.currentUser.id){
       fetch(CART_UPDATE_URL+'/'+this.userService.currentUser.id, {
@@ -91,7 +90,20 @@ export class CartService {
       })
       .then(response => response.json())
       .then(updatedCart => {
+        // adding image to food items back
+        var foodListStr = localStorage.getItem('foods')
+        let foodList: Food[] = [];
+        if (foodListStr) {
+          foodList = JSON.parse(foodListStr);
+        }
+        for (const cartItem of updatedCart.items) {
+          const matchingFood = foodList?.find((food) => food.id === cartItem.food.id);
+          if (matchingFood) {
+            cartItem.food.image = matchingFood.image;
+          }
+        }
         // Save the updated cart to localStorage if the backend call is successful
+
         const cartJson = JSON.stringify(updatedCart);
         localStorage.setItem('Cart', cartJson);
         this.cartSubject.next(updatedCart);

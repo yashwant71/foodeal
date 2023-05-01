@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subject, catchError, from, tap, throwError } from 'rxjs';
-import { FOOD_FAVORITE_URL, USER_GETIMG, USER_LOGINGOOGLE_URL, USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL, USER_UPLOADIMG_URL } from '../shared/constants/urls';
+import { FOOD_FAVORITE_URL, USER_LOGINGOOGLE_URL, USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL, USER_UPLOADIMG_URL } from '../shared/constants/urls';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { IUserRegister } from '../shared/interfaces/IUserRegister';
 import { User } from '../shared/models/User';
@@ -103,9 +103,6 @@ export class UserService {
       })
     )
   }
-  getUserImage(userId: string): Observable<Blob> {
-    return this.http.get(`${USER_GETIMG}/${userId}`, { responseType: 'blob' });
-  }
 
   uploadUserImage(userId: string, selectedFile: File) {
     const formData = new FormData();
@@ -116,16 +113,15 @@ export class UserService {
       body: formData,
     })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error('Error uploading image.');
-        }
-        return response.blob();
+        if (!response.ok) {throw new Error('Error uploading image.');}return response.json();
       })
-      .then((imageBlob) => {
+      .then((user) => {
+        this.setUserToLocalStorage(user);
+        this.userSubject.next(user);
         this.toastrService.success(
           'image uploaded Successfully'
         )
-        return URL.createObjectURL(imageBlob);
+        return user;
       })
       .catch((error) => {
         console.error(error);

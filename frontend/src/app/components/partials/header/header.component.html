@@ -8,8 +8,8 @@
           <default-button text="Login" [widthRem]="0" (click)="goToLogin()" [marginRem]="0" borderRadRem="0"></default-button>
         </li>
         <li *ngIf="isAuth" class="menu-container">
-            <img *ngIf="!userImage" src="assets/user.png" width="40" [title]="user.name">
-            <img *ngIf="userImage" [src]="userImage" width="40" [title]="user.name">
+            <img *ngIf="!user.image" src="assets/user.png" width="40" [title]="user.name">
+            <img *ngIf="user.image" [src]="user.image" width="40" [title]="user.name">
           <div class="menu">
             <default-button text="Profile" [widthRem]="1" (click)="goToProfile()" [marginRem]="0" borderRadRem="0"></default-button>
             <default-button text="Orders" [widthRem]="1" (click)="goToOrders()" [marginRem]="0" borderRadRem="0"></default-button>

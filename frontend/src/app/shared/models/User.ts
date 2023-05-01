@@ -6,4 +6,5 @@ export class User{
   token!:string;
   isAdmin!:boolean;
   favFood?: string[];
+  image?:string;
 }

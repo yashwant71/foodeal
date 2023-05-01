@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { IUserUpdate } from 'src/app/shared/interfaces/IUserUpdate';
 import { PasswordsMatchValidator } from 'src/app/shared/validators/password_match_validator';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { User } from 'src/app/shared/models/User';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,7 @@ export class ProfileComponent {
   userImage: SafeUrl | null = null;
   selectedFile: File | null = null;
   imageButtonText: string = 'Profile Image';
-
+  user!:User;
   returnUrl = '';
   constructor(
     private formBuilder: FormBuilder,
@@ -39,20 +40,7 @@ export class ProfileComponent {
     },{
       validators: PasswordsMatchValidator('password','confirmPassword')
     });
-    //saving the image in localstorage to use in imagecomponent
-    const userImage = localStorage.getItem(`userImage_${this.userService.currentUser.id}`);
-    if (userImage) {
-      this.userImage = this.sanitizer.bypassSecurityTrustUrl(userImage);
-    }
-    this.returnUrl= this.activatedRoute.snapshot.queryParams.returnUrl;
-
-    // if we receive image updated event we update the image
-    this.userService.userImageUpdated$.subscribe(() => {
-    const userImage = localStorage.getItem(`userImage_${this.userService.currentUser.id}`);
-    if (userImage) {
-      this.userImage = this.sanitizer.bypassSecurityTrustUrl(userImage);
-    }
-    })
+    this.user = this.userService.currentUser;
   }
 
   get fc() {
@@ -68,11 +56,8 @@ export class ProfileComponent {
     const reader = new FileReader();
     reader.onloadend = () => {
       this.userService.uploadUserImage(this.userService.currentUser.id, file)
-        .then((image) => {
-          if(image){
-            localStorage.setItem(`userImage_${this.userService.currentUser.id}`,image);
-            this.userService.userImageUpdatedSubject.next(); // emit the event
-          }
+        .then((user) => {
+          this.user = this.userService.currentUser;
         })
         .catch(error => {
           console.error('Failed to upload image', error);

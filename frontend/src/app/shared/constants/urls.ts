@@ -14,7 +14,6 @@ export const USER_LOGINGOOGLE_URL = BASE_URL + '/api/users/loginwithgoogle';
 export const USER_REGISTER_URL = BASE_URL + '/api/users/register';
 export const USER_UPDATE_URL = BASE_URL + '/api/users/update';
 export const USER_UPLOADIMG_URL = BASE_URL + '/api/users/uploadUserImage';
-export const USER_GETIMG = BASE_URL + '/api/users/getUserImage';
 
 export const FOOD_FAVORITE_URL = BASE_URL + '/api/users/favFood'
 

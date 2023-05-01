@@ -6,8 +6,8 @@
 
 <div *ngIf="food" class="container">
   <div class="imgcontainer"*ngIf="food">
-    <img class="imgtoblur" src="{{food.imageUrl}}" style="background-image:  '{{food.imageUrl}}' ">
-    <img class="mainimg" [src]="food.imageUrl" [alt]="food.name"/>
+    <img class="imgtoblur" src="{{food.image}}" style="background-image:  '{{food.image}}' ">
+    <img class="mainimg" [src]="food.image" [alt]="food.name"/>
   </div>
 
   <div class="details">

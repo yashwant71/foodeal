@@ -8,7 +8,7 @@ import { SafeUrl } from '@angular/platform-browser';
   styleUrls: ['./image-upload.component.css']
 })
 export class ImageUploadComponent {
-  @Input() userImage: SafeUrl | null = null;
+  @Input() userImage: string | undefined = undefined;
   @Input() buttonText: string = 'Add Image';
   @Output() imageSelected = new EventEmitter<File>();
   isImageSelected = false;

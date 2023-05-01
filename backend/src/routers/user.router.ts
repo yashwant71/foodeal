@@ -37,39 +37,24 @@ router.post('/uploadUserImage/:userId', upload.single('image'), asyncHandler(
     const userId = req.params.userId;
     console.log("userId:",req.params.userId)
     console.log(req.file)
-    const files = glob.sync(`./uploads/user/${userId}.*`); // find all files that match the pattern
-    files.forEach((file) => {
-      console.log("file::",file)
-      fs.unlinkSync(file); // delete each file
-    });
-    if(req.file){// adding the image 
-      const newImagePath = `./uploads/user/${userId}.${req.file.originalname.split('.').pop()}`;
-      fs.writeFile(newImagePath, req.file.buffer, (err) => {
-        if (err) throw err;
-        console.log('New image saved');
-      });
+    if (req.file) {
       const imageBuffer = req.file.buffer;
-      res.set('Content-Type', req.file.mimetype);
-      res.send(imageBuffer);
-    }else {
+      const base64String = Buffer.from(imageBuffer).toString('base64');
+      const imageSrc = `data:${req.file.mimetype};base64,${base64String}`;
+      console.log('New image saved');
+      
+      const user = await UserModel.findById(userId);
+      if(user){
+        user.image = imageSrc;
+        await user?.save();
+        
+        res.send(generateTokenReponse(user));
+      }
+    } else {
       res.status(400).send({ message: "Please upload an image file" });
     }
   }
 ));
-router.get('/getUserImage/:userId', asyncHandler(async (req, res) => {
-  const userId = req.params.userId;
-  const imagePath = `./uploads/user/${userId}.*`;
-  const files = glob.sync(imagePath);
-  
-  if (files.length > 0) {
-    const fileContent = fs.readFileSync(files[0]);
-    const mimeType = mime.lookup(files[0]) || 'application/octet-stream';
-    res.setHeader('Content-Type', mimeType);
-    res.send(fileContent);
-  } else {
-    res.status(404).send({ message: 'Image not found' });
-  }
-}));
 router.get("/seed", asyncHandler(
   async (req, res) => {
      const usersCount = await UserModel.countDocuments();
@@ -125,30 +110,9 @@ router.post('/loginwithgoogle', asyncHandler(async (req, res) => {
   
     // Make an HTTP request to the image URL
     if(imageUrl){
-      const imagePath = `uploads/user/${dbUser.id}`;
-      
-      https.get(imageUrl, (response) => {
-        const contentType = response.headers['content-type'];
-        const fileExtension = contentType ? contentType.split('/').pop() : 'jpg';
-        const fileName = `${imagePath}.${fileExtension}`;
-        const file = fs.createWriteStream(fileName);
-    
-        response.pipe(file);
-    
-        file.on('finish', () => {
-          file.close();
-          console.log(`Image saved as ${fileName}`);
-          res.send(generateTokenReponse(dbUser));
-
-        });
-    
-        file.on('error', (error) => {
-          res.status(HTTP_BAD_REQUEST).send("image not saved for user");
-        });
-      }).on('error', (error) => {
-        console.error(`Error downloading image: ${error}`);
-      });
-
+      dbUser.image = imageUrl;
+      await dbUser.save(); // Save the updated user data in the database
+      res.send(generateTokenReponse(dbUser))
     }
   }
 }));
@@ -196,7 +160,7 @@ router.post('/update', asyncHandler(
       email: email.toLowerCase(),
       password: encryptedPassword,
       address,
-      isAdmin: false
+      isAdmin: false,
     }
     const updatedUser = await UserModel.findByIdAndUpdate(user.id,updateUser, { new: true });
     if(updatedUser)
@@ -218,7 +182,6 @@ router.get('/favFood/:foodId/:userId', asyncHandler(
       
       if (index !== -1) {
         // If the foodId already exists in the favFood array, remove it
-        console.log(index)
         favFood.splice(index, 1);
       } else {
         // If the foodId does not exist in the favFood array, add it
@@ -253,7 +216,8 @@ const generateTokenReponse = (user : User) => {
     address: user.address,
     isAdmin: user.isAdmin,
     token: token,
-    favFood :user.favFood
+    favFood :user.favFood,
+    image:user?.image
   };
 }
 

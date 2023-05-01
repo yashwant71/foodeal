@@ -2,6 +2,8 @@ import {Router} from 'express';
 import { sample_foods, sample_tags } from '../data';
 import asyncHandler from 'express-async-handler';
 import { FoodModel } from '../models/food.model';
+import fs from 'fs';
+import path from 'path';
 const router = Router();
 
 router.get("/seed", asyncHandler(
@@ -21,6 +23,17 @@ router.get("/seed", asyncHandler(
 router.get("/",asyncHandler(
   async (req, res) => {
     const foods = await FoodModel.find();
+    // async function readImageFile(imagePath: string): Promise<string> {
+    //   const data = await fs.promises.readFile(imagePath);
+    //   const base64 = data.toString('base64');
+    //   return `data:image/png;base64,${base64}`;
+    // }
+    // for (let food of foods) {
+    //   // const imagePath = path.join(imageUrl);
+    //   const imageBuffer = await readImageFile(food.imageUrl);
+    //   food.image = imageBuffer;
+    //   await food.save(); // save the updated food object to the database
+    // }
       res.send(foods);
   }
 ))

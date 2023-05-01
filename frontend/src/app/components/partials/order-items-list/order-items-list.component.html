@@ -7,7 +7,7 @@
   <tr *ngFor="let item of order.items" class="aligncent">
     <td>
       <a routerLink="/food/{{item.food.id}}">
-        <img [src]="item.food.imageUrl"/>
+        <img [src]="item.food.image"/>
       </a>
     </td>
     <td>
