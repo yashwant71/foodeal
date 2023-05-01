@@ -5,6 +5,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { FoodService } from 'src/app/services/food.service';
 import { Food } from 'src/app/shared/models/Food';
 import { User } from 'src/app/shared/models/User';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-food-page',
@@ -15,7 +16,7 @@ export class FoodPageComponent implements OnInit {
   food!: Food;
   favClassVar?:string = 'fav favorite not';
   constructor(activatedRoute:ActivatedRoute, foodService:FoodService,
-    private cartService:CartService, private router: Router,private userService:UserService) {
+    private cartService:CartService, private router: Router,private userService:UserService, private toastrService:ToastrService) {
     activatedRoute.params.subscribe((params) => {
       if(params.id)
       foodService.getFoodById(params.id).subscribe(serverFood => {
@@ -32,13 +33,17 @@ export class FoodPageComponent implements OnInit {
   ngOnInit(): void {
   }
   toggleFavorite(){
-    this.userService.toggleFavorite(this.food.id,this.userService.currentUser.id).subscribe((data:any) => {
-      if(this.userService.currentUser.favFood && this.userService.currentUser.favFood.includes(this.food.id)){
-        this.favClassVar = 'fav favorite'
-      }else{
-        this.favClassVar = 'fav favorite not'
-      }
-    });
+    if(this.userService && this.userService.currentUser && this.userService.currentUser.id){
+      this.userService.toggleFavorite(this.food.id,this.userService.currentUser.id).subscribe((data:any) => {
+        if(this.userService.currentUser.favFood && this.userService.currentUser.favFood.includes(this.food.id)){
+          this.favClassVar = 'fav favorite'
+        }else{
+          this.favClassVar = 'fav favorite not'
+        }
+      });
+    }else{
+      this.toastrService.error('please login to add favorites !');
+    }
   }
   addToCart(){
     this.cartService.addToCart(this.food);

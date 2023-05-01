@@ -81,27 +81,29 @@ export class CartService {
       .reduce((prevSum, currentItem) => prevSum + currentItem.quantity, 0);
 
     // Send the updated cart to the backend
-    console.log(this.userService.currentUser)
-    fetch(CART_UPDATE_URL+'/'+this.userService.currentUser.id, {
-      method: 'POST',
-      body: JSON.stringify(this.cart),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then(updatedCart => {
-      // Save the updated cart to localStorage if the backend call is successful
-      const cartJson = JSON.stringify(updatedCart);
-      localStorage.setItem('Cart', cartJson);
-      this.cartSubject.next(updatedCart);
-    })
-    .catch(error => {
-      // Handle any errors from the backend call
-      console.log(error)
-      this.toastrService.error('Failed to update cart on the server');
-    });
-
+    if(this.userService && this.userService.currentUser && this.userService.currentUser.id){
+      fetch(CART_UPDATE_URL+'/'+this.userService.currentUser.id, {
+        method: 'POST',
+        body: JSON.stringify(this.cart),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(updatedCart => {
+        // Save the updated cart to localStorage if the backend call is successful
+        const cartJson = JSON.stringify(updatedCart);
+        localStorage.setItem('Cart', cartJson);
+        this.cartSubject.next(updatedCart);
+      })
+      .catch(error => {
+        // Handle any errors from the backend call
+        console.log(error)
+        this.toastrService.error('Failed to update cart on the server');
+      });
+    }else{
+      this.toastrService.error('please login to add to cart');
+    }
   }
 
   private getCartFromLocalStorage(): Cart {

@@ -4,7 +4,20 @@
 *{
   box-sizing: border-box;
 }
+::-webkit-scrollbar {
+  width: 14px;
+}
 
+::-webkit-scrollbar-thumb {
+  min-height: 40px;
+  background-color: var(--hover-bg-color2);
+  border-radius: 100px;
+  border: 3px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
 html{
   font-size:16px;
 }
