@@ -12,26 +12,26 @@ import { dbConnect } from './configs/database.config';
 dbConnect();
 
 
-const uploadsDirPath = path.join(__dirname, 'uploads');
-const userDirPath = path.join(uploadsDirPath, 'user');
+// const uploadsDirPath = path.join(__dirname, 'uploads');
+// const userDirPath = path.join(uploadsDirPath, 'user');
 
-if (!fs.existsSync(uploadsDirPath)) {
-  // create uploads directory if it doesn't exist
-  fs.mkdirSync(uploadsDirPath);
-  console.log("uploads didnt exist ,thus created uploads")
-}
+// if (!fs.existsSync(uploadsDirPath)) {
+//   // create uploads directory if it doesn't exist
+//   fs.mkdirSync(uploadsDirPath);
+//   console.log("uploads didnt exist ,thus created uploads")
+// }
 
-if (!fs.existsSync(userDirPath)) {
-    // create user directory if it doesn't exist
-    fs.mkdirSync(userDirPath);
-    console.log("user didnt exist ,thus created user")
-}
+// if (!fs.existsSync(userDirPath)) {
+//     // create user directory if it doesn't exist
+//     fs.mkdirSync(userDirPath);
+//     console.log("user didnt exist ,thus created user")
+// }
 
-// set permissions for both directories
-fs.chmodSync(uploadsDirPath, 0o755);
-console.log("gave 755 perms to uploads")
-fs.chmodSync(userDirPath, 0o755);
-console.log("gave 755 perms to user")
+// // set permissions for both directories
+// fs.chmodSync(uploadsDirPath, 0o755);
+// console.log("gave 755 perms to uploads")
+// fs.chmodSync(userDirPath, 0o755);
+// console.log("gave 755 perms to user")
 
 const app = express();
 app.use(express.json());
