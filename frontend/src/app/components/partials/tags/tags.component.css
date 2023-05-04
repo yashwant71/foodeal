@@ -10,7 +10,5 @@ div a{
   margin: 0.2rem 0.15rem;
   border-radius: 10rem;
   font-weight: bolder;
-  text-shadow: 1px 1px var(--col3);
   color: var(--col1);
-
 }

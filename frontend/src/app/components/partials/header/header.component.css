@@ -243,3 +243,9 @@ a span{
     transform: translateX(-4000px);
   }
 }
+
+@media (max-width: 489px) {
+  .loop-wrapper{
+    display: none;
+  }
+}
