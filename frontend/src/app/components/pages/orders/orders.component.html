@@ -10,7 +10,7 @@
     <li class="items">
       <span *ngFor="let orderitem of order.items">
         <div>
-          <img [src]="orderitem.food.imageUrl" [alt]="orderitem.food.name">
+          <img [src]="orderitem.food.image" [alt]="orderitem.food.name">
         </div>
         <div>
           <a routerLink="/food/{{orderitem.food.id}}">
