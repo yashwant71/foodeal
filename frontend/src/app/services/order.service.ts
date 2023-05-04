@@ -13,6 +13,9 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   create(order:Order){
+    for (let i = 0; i < order.items.length; i++) {
+      delete order.items[i].food.image;
+    }
     return this.http.post<Order>(ORDER_CREATE_URL, order);
   }
   getOrders(){
@@ -23,6 +26,9 @@ export class OrderService {
   }
 
   pay(order:Order):Observable<string>{
+    for (let i = 0; i < order.items.length; i++) {
+      delete order.items[i].food.image;
+    }
     return this.http.post<string>(ORDER_PAY_URL,order);
   }
 

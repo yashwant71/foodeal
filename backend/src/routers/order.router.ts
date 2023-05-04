@@ -4,6 +4,7 @@ import { HTTP_BAD_REQUEST } from '../constants/http_status';
 import { OrderStatus } from '../constants/order_status';
 import { OrderModel } from '../models/order.model';
 import auth from '../middlewares/auth.mid';
+import { FoodModel } from '../models/food.model';
 
 const router = Router();
 router.use(auth);
@@ -16,7 +17,13 @@ asyncHandler(async (req:any, res:any) => {
         res.status(HTTP_BAD_REQUEST).send('Cart Is Empty!');
         return;
     }
-
+    for (let i = 0; i < requestOrder.items.length; i++) {
+        const item = requestOrder.items[i];
+        const food = await FoodModel.findOne({ _id: item.food.id });
+        if (food) {
+            requestOrder.items[i].food = food;
+        }
+    }
     await OrderModel.deleteOne({
         user: req.user.id,
         status: OrderStatus.NEW
@@ -46,7 +53,6 @@ router.post('/pay', asyncHandler( async (req:any, res) => {
         res.status(HTTP_BAD_REQUEST).send('Order Not Found!');
         return;
     }
-
     order.paymentId = paymentId;
     order.status = OrderStatus.PAYED;
     await order.save();
