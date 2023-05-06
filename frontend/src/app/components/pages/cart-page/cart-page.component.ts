@@ -13,9 +13,8 @@ export class CartPageComponent implements OnInit {
   cart!: Cart;
   constructor(private cartService: CartService,private router: Router) {
     this.cartService.getCartObservable().subscribe((cart) => {
-      if(cart && cart.items[0].food.image)
+      if(cart)
       this.cart = cart;
-      console.log("tset,",this.cart)
     })
    }
 

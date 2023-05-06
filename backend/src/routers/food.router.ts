@@ -55,7 +55,7 @@ router.get("/",asyncHandler(
 router.get("/search/:searchTerm", asyncHandler(
   async (req, res) => {
     const searchRegex = new RegExp(req.params.searchTerm, 'i');
-    const foods = await FoodModel.find({name: {$regex:searchRegex}})
+    const foods = await FoodModel.find({name: {$regex:searchRegex}}).populate('seller','name email');
     res.send(foods);
   }
 ))
@@ -93,14 +93,14 @@ router.get("/tags", asyncHandler(
 
 router.get("/tag/:tagName",asyncHandler(
   async (req, res) => {
-    const foods = await FoodModel.find({tags: req.params.tagName})
+    const foods = await FoodModel.find({tags: req.params.tagName}).populate('seller','name email');
     res.send(foods);
   }
 ))
 
 router.get("/:foodId", asyncHandler(
   async (req, res) => {
-    const food = await FoodModel.findById(req.params.foodId);
+    const food = await FoodModel.findById(req.params.foodId).populate('seller','name email image');;
     res.send(food);
   }
 ))
