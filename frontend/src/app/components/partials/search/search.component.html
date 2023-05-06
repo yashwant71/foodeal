@@ -1,7 +1,8 @@
 <div>
   <input #s type="text" placeholder="Search your Food deal!"
-   (keyup.enter)="search(s.value)"
-   [value]="searchTerm" />
+  (keyup.enter)="search(s.value)"
+  [value]="searchTerm" />
   <!-- <button (click)="search(s.value)">Search</button> -->
   <default-button text="Search" [widthRem]="1" (click)="search(s.value)" [marginRem]="0"  borderRadRem="0rem 10rem 10rem 0" [heightRem]="2.9" padding="1.15em 3em"></default-button>
+  <toggle-seller></toggle-seller>
 </div>

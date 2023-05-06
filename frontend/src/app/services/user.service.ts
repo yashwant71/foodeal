@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subject, catchError, from, tap, throwError } from 'rxjs';
-import { FOOD_FAVORITE_URL, USER_LOGINGOOGLE_URL, USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL, USER_UPLOADIMG_URL } from '../shared/constants/urls';
+import { FOOD_FAVORITE_URL, USER_ISSELLER_URL, USER_LOGINGOOGLE_URL, USER_LOGIN_URL, USER_REGISTER_URL, USER_UPDATE_URL, USER_UPLOADIMG_URL } from '../shared/constants/urls';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { IUserRegister } from '../shared/interfaces/IUserRegister';
 import { User } from '../shared/models/User';
@@ -171,5 +171,29 @@ export class UserService {
           throw error;
         })
     );
+  }
+
+  sellerToggle(isSeller:boolean,userId:string){
+    return fetch(USER_ISSELLER_URL+userId+'/'+isSeller)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then(user => {
+      console.log("updated user",user)
+      this.setUserToLocalStorage(user);
+      this.userSubject.next(user);
+      if(user.isSeller)
+        this.toastrService.success(
+          'welcome to seller Dashboard'
+        );
+      return user;
+    })
+    .catch(error => {
+      this.toastrService.error(error.message, 'update failed');
+      throw error;
+    });
   }
 }

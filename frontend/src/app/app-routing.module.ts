@@ -1,5 +1,6 @@
+import { AddFoodComponent } from './components/pages/add-food/add-food.component';
 import { OrdersComponent } from './components/pages/orders/orders.component';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { CartPageComponent } from './components/pages/cart-page/cart-page.component';
@@ -25,7 +26,8 @@ const routes: Routes = [
   {path:'payment', component: PaymentPageComponent, canActivate:[AuthGuard]},
   {path:'track/:orderId', component: OrderTrackPageComponent, canActivate:[AuthGuard]},
   {path:'profile',component:ProfileComponent},
-  {path:'orders',component:OrdersComponent}
+  {path:'orders',component:OrdersComponent},
+  {path: 'addFood',component:AddFoodComponent}
 
 ];
 

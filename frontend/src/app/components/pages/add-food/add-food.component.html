@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="imagebox">
+    <!-- <div *ngIf="!selectedFile" class="imageuploadbtn" (click)="triggerClick()"><img src="assets/addImage.png" alt=""></div> -->
+    <input #fileInput class="file-upload-input" id="file-input" type='file' (change)="onImageSelected($event)" accept="image/*" [hidden]="true" />
+    <div class="file-upload-content" *ngIf="selectedFile">
+      <img class="file-upload-image" [src]="selectedFile" alt="Uploaded image" />
+      <div class="image-title-wrap">
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!selectedFile" class="imageuploadbtn" (click)="triggerClick()"><img src="assets/addImage.png" alt=""></div>
+  <div class="details">
+    <app-title title="Add Food Details"></app-title>
+    <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+      <text-input
+        [control]="fc.name"
+        [showErrorsWhen]="isSubmitted"
+        label="Food Title*">
+      </text-input>
+
+      <text-input
+        [control]="fc.price"
+        [showErrorsWhen]="isSubmitted"
+        label="Price*">
+      </text-input>
+
+      <div class="multi multi-tags">
+        <ng-multiselect-dropdown
+          [placeholder]="'Select tags*...'"
+          [data]="tagsOptions"
+          formControlName="selectedTags"
+          [settings]="dropdownSettings">
+        </ng-multiselect-dropdown>
+        <input-validation
+          [control]="fc.selectedTags"
+          [showErrorsWhen]="isSubmitted">
+        </input-validation>
+      </div>
+
+      <div class="multi multi-origins">
+        <ng-multiselect-dropdown
+          [placeholder]="'Select Origins*...'"
+          [data]="originsOptions"
+          formControlName="selectedOrigins"
+          [settings]="dropdownSettings">
+        </ng-multiselect-dropdown>
+        <input-validation
+          [control]="fc.selectedOrigins"
+          [showErrorsWhen]="isSubmitted">
+        </input-validation>
+      </div>
+
+
+      <text-input
+        [control]="fc.cookTime"
+        [showErrorsWhen]="isSubmitted"
+        label="Cook Time* (in minutes)">
+      </text-input>
+
+
+      <default-button text="Upload"></default-button>
+    </form>
+  </div>
+</div>

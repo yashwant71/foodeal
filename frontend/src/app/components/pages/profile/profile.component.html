@@ -1,7 +1,7 @@
 <div class="container">
   <div class="details">
     <app-title title="Update Your Profile"></app-title>
-    <image-upload [userImage]="user.image" (imageSelected)="onImageSelected($event)"  [buttonText]="imageButtonText"></image-upload>
+    <image-upload [userImage]="user.image" (imageSelected)="onImageSelected($event)"  buttonText="Profile image"></image-upload>
 
     <form [formGroup]="registerForm" (ngSubmit)="submit()">
       <text-input
@@ -10,38 +10,36 @@
       label="Name">
     `</text-input>
 
-    <text-input
-    [control]="fc.email"
-    [showErrorsWhen]="isSubmitted"
-    label="Email"
-    type="email">
-  `</text-input>
+      <text-input
+      [control]="fc.email"
+      [showErrorsWhen]="isSubmitted"
+      label="Email"
+      type="email">
+    `</text-input>
 
 
-  <text-input
-  [control]="fc.password"
-  [showErrorsWhen]="isSubmitted"
-  label="Password"
-  type="password">
-`</text-input>
+      <text-input
+      [control]="fc.password"
+      [showErrorsWhen]="isSubmitted"
+      label="Password"
+      type="password">
+    `</text-input>
 
-<text-input
-[control]="fc.confirmPassword"
-[showErrorsWhen]="isSubmitted"
-label="Confirm Password"
-type="password">
-`</text-input>
+      <text-input
+      [control]="fc.confirmPassword"
+      [showErrorsWhen]="isSubmitted"
+      label="Confirm Password"
+      type="password">
+      `</text-input>
 
-<text-input
-[control]="fc.address"
-[showErrorsWhen]="isSubmitted"
-label="Address">
-`</text-input>
-
-
-<default-button text="Confirm"></default-button>
+      <text-input
+      [control]="fc.address"
+      [showErrorsWhen]="isSubmitted"
+      label="Address">
+      `</text-input>
 
 
+      <default-button text="Confirm"></default-button>
     </form>
   </div>
 </div>

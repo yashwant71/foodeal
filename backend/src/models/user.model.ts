@@ -9,6 +9,7 @@ export interface User{
     isAdmin:boolean;
     favFood?: string[];
     image?:string;
+    isSeller?:boolean;
 }
 
 export const UserSchema = new Schema<User>({
@@ -18,7 +19,8 @@ export const UserSchema = new Schema<User>({
     address: {type: String},
     isAdmin: {type: Boolean, required: true},
     favFood: { type: [String], default: [] },
-    image: {type:String}
+    image: {type:String},
+    isSeller:{type:Boolean}
 }, {
     timestamps: true,
     toJSON:{

@@ -68,6 +68,16 @@ router.get("/seed", asyncHandler(
  }
  ))
 
+ router.get("/isSeller/:userId/:isSeller", asyncHandler(
+  async (req, res) => {
+    const userId = req.params.userId;
+    const isSeller = req.params.isSeller;
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, { $set: { isSeller:isSeller } }, { new: true });
+    if(updatedUser)
+    res.status(200).json(generateTokenReponse(updatedUser));
+ }
+ ))
+
 router.post("/login", asyncHandler(
   async (req, res) => {
     const {email, password} = req.body;
@@ -217,7 +227,8 @@ const generateTokenReponse = (user : User) => {
     isAdmin: user.isAdmin,
     token: token,
     favFood :user.favFood,
-    image:user?.image
+    image:user?.image,
+    isSeller:user?.isSeller
   };
 }
 

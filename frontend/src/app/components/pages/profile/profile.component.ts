@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 import { IUserUpdate } from 'src/app/shared/interfaces/IUserUpdate';
 import { PasswordsMatchValidator } from 'src/app/shared/validators/password_match_validator';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { User } from 'src/app/shared/models/User';
 
 @Component({
@@ -16,18 +15,14 @@ import { User } from 'src/app/shared/models/User';
 export class ProfileComponent {
   registerForm!:FormGroup;
   isSubmitted = false;
-  userImage: SafeUrl | null = null;
   selectedFile: File | null = null;
-  imageButtonText: string = 'Profile Image';
   user!:User;
   returnUrl = '';
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastrService:ToastrService,
-    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {

@@ -7,4 +7,5 @@ export class User{
   isAdmin!:boolean;
   favFood?: string[];
   image?:string;
+  isSeller?:Boolean;
 }

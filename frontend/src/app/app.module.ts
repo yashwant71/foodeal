@@ -13,7 +13,7 @@ import { CartPageComponent } from './components/pages/cart-page/cart-page.compon
 import { TitleComponent } from './components/partials/title/title.component';
 import { NotFoundComponent } from './components/partials/not-found/not-found.component';
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { InputContainerComponent } from './components/partials/input-container/input-container.component';
@@ -35,6 +35,9 @@ import { ImageUploadComponent } from './components/partials/image-upload/image-u
 import { GoogleLoginComponent } from './components/partials/google-login/google-login.component';
 import { OrdersComponent } from './components/pages/orders/orders.component';
 import { FooterComponent } from './components/partials/footer/footer.component';
+import { ToggleSellerComponent } from './components/partials/toggle-seller/toggle-seller.component';
+import { AddFoodComponent } from './components/pages/add-food/add-food.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +66,9 @@ import { FooterComponent } from './components/partials/footer/footer.component';
     ImageUploadComponent,
     GoogleLoginComponent,
     OrdersComponent,
-    FooterComponent
+    FooterComponent,
+    ToggleSellerComponent,
+    AddFoodComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +77,8 @@ import { FooterComponent } from './components/partials/footer/footer.component';
     RatingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
+    NgMultiSelectDropDownModule,
     ToastrModule.forRoot({
       timeOut:3000,
       positionClass:'toast-bottom-right',

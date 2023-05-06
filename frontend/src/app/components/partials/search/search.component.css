@@ -3,8 +3,17 @@ div{
   justify-content: center;
   margin-top: 3rem;
   margin-bottom: 1.5rem;
+  position: relative;
 }
 
+toggle-seller{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 150px;
+  top: 8px;
+}
 input{
   border-radius: 10rem 0 0 10rem;
   border: none;
@@ -33,4 +42,14 @@ div button{
 div button:hover{
   opacity: 1;
   cursor: pointer;
+}
+
+@media (max-width: 1150px) {
+  div{
+    height: 5rem;
+  }
+  toggle-seller{
+    top: 3.8rem;
+    right: unset;
+  }
 }

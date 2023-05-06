@@ -4,6 +4,7 @@ import asyncHandler from 'express-async-handler';
 import { FoodModel } from '../models/food.model';
 import fs from 'fs';
 import path from 'path';
+import mongoose from 'mongoose';
 const router = Router();
 
 router.get("/seed", asyncHandler(
@@ -19,10 +20,23 @@ router.get("/seed", asyncHandler(
 }
 ))
 
+router.get('/count/:localCount',asyncHandler(
+  async(req,res)=>{
+    const localCount = Number(req.params.localCount);
+    const foodsCount = await FoodModel.countDocuments();
+
+    if(foodsCount == localCount){
+      res.send(true);
+      return;
+    }else{
+      res.send(false);
+    }
+  }
+))
 
 router.get("/",asyncHandler(
   async (req, res) => {
-    const foods = await FoodModel.find();
+    const foods = await FoodModel.find().populate('seller','name email');
     // async function readImageFile(imagePath: string): Promise<string> {
     //   const data = await fs.promises.readFile(imagePath);
     //   const base64 = data.toString('base64');
@@ -91,5 +105,27 @@ router.get("/:foodId", asyncHandler(
   }
 ))
 
+
+router.post('/add', asyncHandler(async (req, res) => {
+  const dataToUpload = req.body;
+  const sellerId = req.body.seller;
+  // Create a new instance of the Food model
+  const newFood = new FoodModel({
+    name: dataToUpload.name,
+    price: dataToUpload.price,
+    tags: dataToUpload.tags,
+    cookTime: dataToUpload.cookTime,
+    origins: dataToUpload.origins,
+    image: dataToUpload.image,
+    stars: 0,
+    seller: sellerId
+  });
+
+  // Save the new food document to the database
+  const savedFood = await newFood.save();
+  console.log(savedFood)
+  
+  res.status(201).json(savedFood);
+}));
 
 export default router;

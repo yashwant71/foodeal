@@ -93,3 +93,16 @@ li a img{
   margin-top: 0.7rem;
   font-size: 1.1rem;
 }
+
+
+.addFood a{
+  display: flex;
+  border: 1px solid gray;
+  justify-content: center;
+  align-items: center;
+}
+.addFood img{
+  opacity: 0.6;
+  width: 4rem;
+  height: 4rem !important;
+}

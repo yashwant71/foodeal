@@ -1,0 +1,5 @@
+<div *ngIf="user.id">
+  are you a seller?
+  <input type="checkbox" id="switch" [(ngModel)]="user.isSeller" (click)="toggleSeller($event)" />
+  <label for="switch" title="Are you a seller?">Toggle</label>
+</div>
