@@ -5,6 +5,8 @@
   height: 100%;
   margin-top: 3rem;
   position: relative;
+  margin:  3rem auto;
+  width: 90vw;
 }
 
 .imagebox{
@@ -12,12 +14,16 @@
   justify-content: center;
   position: relative;
 }
+.width100{
+  width: 100%;
+}
 .imageuploadbtn{
   display: flex;
   justify-content: center;
   align-items: center;
   cursor:pointer;
   width: 37rem;
+  width: 100%;
   height: 27rem;
   margin: 1rem;
   border: 1px dotted var(--col1);
@@ -34,13 +40,25 @@
   object-fit: cover;
   height: auto;
   width: 36.35rem;
+  width: 100%;
 
 }
 .details{
   width: 40rem;
   margin: 1rem;
+  margin: 0px 1rem;
+  width: 100%;
 }
 
 .multi{
   margin-bottom: 0.5rem;
+}
+
+@media (max-width: 1000px) {
+  /* CSS rules for screens with a maximum width of 785px or less */
+  .container{
+    flex-direction: column;
+
+  }
+
 }

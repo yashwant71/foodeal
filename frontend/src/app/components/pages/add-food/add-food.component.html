@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="imagebox">
+  <div class="imagebox" [ngClass]="{'width100':selectedFile}">
     <!-- <div *ngIf="!selectedFile" class="imageuploadbtn" (click)="triggerClick()"><img src="assets/addImage.png" alt=""></div> -->
     <input #fileInput class="file-upload-input" id="file-input" type='file' (change)="onImageSelected($event)" accept="image/*" [hidden]="true" />
     <div class="file-upload-content" *ngIf="selectedFile">
