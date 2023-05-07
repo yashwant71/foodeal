@@ -106,7 +106,7 @@ li a img{
 
 .addFood a{
   display: flex;
-  border: 1px solid gray;
+  border: 1px solid var(--col2);
   justify-content: center;
   align-items: center;
 }
