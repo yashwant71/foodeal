@@ -29,6 +29,9 @@
   border: 1px dotted var(--col1);
   border-radius: 2rem;
 }
+.imageuploadbtn:hover{
+  opacity: 0.9;
+}
 .file-upload-content{
   width: inherit;
   position: relative;
