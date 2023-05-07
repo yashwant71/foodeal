@@ -1,6 +1,6 @@
 <div class="file-upload">
   <!-- <button class="file-upload-btn" type="button" (click)="triggerClick()">Add {{ buttonText }}</button> -->
-  <default-button [text]="'Add ' + buttonText" [widthRem]="35" (click)="triggerClick()" [marginRem]="0"></default-button>
+  <default-button [text]="'Add ' + buttonText" [widthRem]="50" (click)="triggerClick()" [marginRem]="0"></default-button>
 
   <input #fileInput class="file-upload-input" id="file-input" type='file' (change)="onImageSelected($event)" accept="image/*" [hidden]="true" />
   <div class="file-upload-content" *ngIf="isImageSelected">

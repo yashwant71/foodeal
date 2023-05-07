@@ -3,9 +3,10 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  margin-top: 3rem;
+  width: 50vw;
+  margin: 3rem auto;
 }
 
 .details{
-  width: 25rem;
+  width: 100%;
 }
