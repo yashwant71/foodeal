@@ -10,3 +10,52 @@
 .details{
   width: 100%;
 }
+
+.imagebox{
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.width100{
+  width: 100%;
+}
+.imageuploadbtn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor:pointer;
+  width: 37rem;
+  width: 100%;
+  height: 15rem;
+  margin: 1rem auto;
+  border: 1px dotted var(--col1);
+  border-radius: 2rem;
+}
+.file-upload-content{
+  width: inherit;
+  position: relative;
+  padding: 1rem;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.file-upload-image{
+  border-radius: 3rem;
+  flex: 1 0;
+  object-fit: cover;
+  height: auto;
+  width: 50%;
+
+}
+.closebtn{
+  position: absolute ;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  cursor: pointer;
+}
+
+.closebtn:hover{
+  opacity: 0.9;
+}

@@ -31,7 +31,6 @@ import { PaymentPageComponent } from './components/pages/payment-page/payment-pa
 import { PaypalButtonComponent } from './components/partials/paypal-button/paypal-button.component';
 import { OrderTrackPageComponent } from './components/pages/order-track-page/order-track-page.component';
 import { ProfileComponent } from './components/pages/profile/profile.component';
-import { ImageUploadComponent } from './components/partials/image-upload/image-upload.component';
 import { GoogleLoginComponent } from './components/partials/google-login/google-login.component';
 import { OrdersComponent } from './components/pages/orders/orders.component';
 import { FooterComponent } from './components/partials/footer/footer.component';
@@ -63,7 +62,6 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     PaypalButtonComponent,
     OrderTrackPageComponent,
     ProfileComponent,
-    ImageUploadComponent,
     GoogleLoginComponent,
     OrdersComponent,
     FooterComponent,

@@ -1,7 +1,17 @@
 <div class="container">
   <div class="details">
     <app-title title="Update Your Profile"></app-title>
-    <image-upload [userImage]="user.image" (imageSelected)="onImageSelected($event)"  buttonText="Profile image"></image-upload>
+    <!-- <image-upload [userImage]="user.image" (imageSelected)="onImageSelected($event)"  buttonText="Profile image"></image-upload> -->
+    <div class="imagebox" [ngClass]="{'width100':selectedFile}">
+      <input #fileInput class="file-upload-input" id="file-input" type='file' (change)="onImageSelected($event)" accept="image/*" [hidden]="true" />
+      <div class="file-upload-content" *ngIf="selectedFile">
+        <img src="assets/close.png" alt="" class="closebtn" (click)="removeImage()">
+        <img class="file-upload-image" [src]="selectedFile" alt="Uploaded image" />
+        <div class="image-title-wrap">
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!selectedFile" class="imageuploadbtn" (click)="triggerClick()"><img src="assets/addImage.png" alt=""></div>
 
     <form [formGroup]="registerForm" (ngSubmit)="submit()">
       <text-input

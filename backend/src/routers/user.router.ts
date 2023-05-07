@@ -6,55 +6,10 @@ import { User, UserModel } from '../models/user.model';
 import { HTTP_BAD_REQUEST } from '../constants/http_status';
 import bcrypt from 'bcryptjs';
 const router = Router();
-import multer, { Multer } from 'multer';
-import * as fs from 'fs';
-import * as glob from 'glob';
-import mime from 'mime-types';
-import { GoogleAuth, GoogleAuthOptions, TokenPayload ,OAuth2Client } from 'google-auth-library';
+import { TokenPayload ,OAuth2Client } from 'google-auth-library';
 import dotenv from 'dotenv';
-import { JSONClient } from 'google-auth-library/build/src/auth/googleauth';
 dotenv.config();
 
-import * as https from 'https';
-
-/// Created an instance of Multer to handle file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads/user'); // setting the folder to which the file will be saved
-  },
-  filename: function (req, file, cb) {
-    const userId = req.params.userId;
-    const ext = file.originalname.split('.').pop();
-    cb(null, userId + '.' + ext); // setting the filename of the saved file as the userId
-  }
-});
-const upload = multer({ storage: multer.memoryStorage() });
-
-
-
-router.post('/uploadUserImage/:userId', upload.single('image'), asyncHandler(
-  async (req, res) => {
-    const userId = req.params.userId;
-    console.log("userId:",req.params.userId)
-    console.log(req.file)
-    if (req.file) {
-      const imageBuffer = req.file.buffer;
-      const base64String = Buffer.from(imageBuffer).toString('base64');
-      const imageSrc = `data:${req.file.mimetype};base64,${base64String}`;
-      console.log('New image saved');
-      
-      const user = await UserModel.findById(userId);
-      if(user){
-        user.image = imageSrc;
-        await user?.save();
-        
-        res.send(generateTokenReponse(user));
-      }
-    } else {
-      res.status(400).send({ message: "Please upload an image file" });
-    }
-  }
-));
 router.get("/seed", asyncHandler(
   async (req, res) => {
      const usersCount = await UserModel.countDocuments();
@@ -154,7 +109,7 @@ router.post('/register', asyncHandler(
 
 router.post('/update', asyncHandler(
   async (req:any, res) => {
-    const {name, email, password, address} = req.body;
+    const {name, email, password, address,image} = req.body;
     const user = await UserModel.findOne({ email: new RegExp('^' + email + '$', 'i') }); //lower case and match last and start of string
 
     if(!user){
@@ -171,6 +126,7 @@ router.post('/update', asyncHandler(
       password: encryptedPassword,
       address,
       isAdmin: false,
+      image
     }
     const updatedUser = await UserModel.findByIdAndUpdate(user.id,updateUser, { new: true });
     if(updatedUser)

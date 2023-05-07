@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,8 @@ import { User } from 'src/app/shared/models/User';
 export class ProfileComponent {
   registerForm!:FormGroup;
   isSubmitted = false;
-  selectedFile: File | null = null;
+  selectedFile: string | undefined = undefined;
+  @ViewChild('fileInput') fileInput: ElementRef | undefined;
   user!:User;
   returnUrl = '';
   constructor(
@@ -23,7 +24,9 @@ export class ProfileComponent {
     private userService: UserService,
     private router: Router,
     private toastrService:ToastrService,
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
@@ -36,40 +39,55 @@ export class ProfileComponent {
       validators: PasswordsMatchValidator('password','confirmPassword')
     });
     this.user = this.userService.currentUser;
+    if(this.user && this.user.image)
+      this.selectedFile = this.user.image;
   }
 
   get fc() {
     return this.registerForm.controls;
   }
-
-  // for image uploading
-  onImageSelected(file: File) { // file is from eventEmitter from image-upload component
-    if (file && file.size > 2 * 1024 * 1024) {
-      this.toastrService.error('Please select an image file with a size less than 2MB.');
+  onImageSelected(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    // check file type
+    if (!file.type.match(/image\/(png|jpg|jpeg)/)) {
+      this.toastrService.error('Image must be a PNG or JPG file');
       return;
     }
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      this.userService.uploadUserImage(this.userService.currentUser.id, file)
-        .then((user) => {
-          this.user = this.userService.currentUser;
-        })
-        .catch(error => {
-          console.error('Failed to upload image', error);
-        });
-    };
-    reader.readAsDataURL(file);
+    // check file size
+    if (file.size > 1000000) { // 1 MB
+      this.toastrService.error('image size should be less than 1 MB.');
+      return;
+    }
+
+    reader.onload = () => {
+      this.selectedFile = reader.result as string;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+  }
+  triggerClick() {
+    if (this.fileInput) {
+      this.fileInput.nativeElement.click();
+    }
+  }
+  removeImage(){
+    this.selectedFile = undefined;
   }
   submit(){
     this.isSubmitted = true;
     if(this.registerForm.invalid) return;
+    if(!this.selectedFile){
+      this.toastrService.error('Please select User image');
+      return;
+    }
     const fv= this.registerForm.value;
     const user :IUserUpdate = {
       name: fv.name,
       email: fv.email,
       password: fv.password,
       confirmPassword: fv.confirmPassword,
-      address: fv.address
+      address: fv.address,
+      image: this.selectedFile
     };
 
     this.userService.update(user).subscribe(_ => {

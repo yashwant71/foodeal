@@ -104,35 +104,6 @@ export class UserService {
     )
   }
 
-  uploadUserImage(userId: string, selectedFile: File) {
-    const formData = new FormData();
-    formData.append('image', selectedFile);
-
-    return fetch(`${USER_UPLOADIMG_URL}/${userId}`, {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => {
-        if (!response.ok) {throw new Error('Error uploading image.');}return response.json();
-      })
-      .then((user) => {
-        this.setUserToLocalStorage(user);
-        this.userSubject.next(user);
-        this.toastrService.success(
-          'image uploaded Successfully'
-        )
-        return user;
-      })
-      .catch((error) => {
-        console.error(error);
-        this.toastrService.error(error,
-          'upload Failed')
-        throw error; // throw the error to be caught by the caller
-      });
-  }
-
-
-
   logout(){
     this.userSubject.next(new User());
     localStorage.removeItem(USER_KEY);

@@ -6,4 +6,5 @@ export interface IUserUpdate{
   password : string;
   confirmPassword : string;
   address: string;
+  image: string;
 }
