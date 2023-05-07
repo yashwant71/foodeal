@@ -78,7 +78,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     FormsModule,
     NgMultiSelectDropDownModule,
     ToastrModule.forRoot({
-      timeOut:3000,
+      timeOut:5000,
       positionClass:'toast-bottom-right',
       newestOnTop:false
     })

@@ -55,8 +55,8 @@ export class ProfileComponent {
       return;
     }
     // check file size
-    if (file.size > 1000000) { // 1 MB
-      this.toastrService.error('image size should be less than 1 MB.');
+    if (file.size > 100000) { // 1 MB
+      this.toastrService.error('image size should be less than 100KB.');
       return;
     }
 

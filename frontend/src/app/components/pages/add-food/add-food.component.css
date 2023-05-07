@@ -54,6 +54,18 @@
   margin-bottom: 0.5rem;
 }
 
+.closebtn{
+  position: absolute ;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  cursor: pointer;
+}
+
+.closebtn:hover{
+  opacity: 0.9;
+}
+
 @media (max-width: 1000px) {
   /* CSS rules for screens with a maximum width of 785px or less */
   .container{

@@ -48,8 +48,8 @@ export class AddFoodComponent {
       return;
     }
     // check file size
-    if (file.size > 1000000) { // 1 MB
-      this.toastrService.error('image size should be less than 1 MB.');
+    if (file.size > 200000) { // 200 KB
+      this.toastrService.error('Image size should be less than 200KB.');
       return;
     }
 
@@ -62,6 +62,9 @@ export class AddFoodComponent {
     if (this.fileInput) {
       this.fileInput.nativeElement.click();
     }
+  }
+  removeImage(){
+    this.selectedFile = undefined;
   }
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
