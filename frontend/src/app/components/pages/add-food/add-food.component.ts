@@ -35,7 +35,8 @@ export class AddFoodComponent {
     this.selectedOrigins = [];
     this.dropdownSettings = {
       singleSelection: false,
-      allowSearchFilter: false
+      allowSearchFilter: false,
+      enableCheckAll: false
     };
   }
   onImageSelected(event: any) {

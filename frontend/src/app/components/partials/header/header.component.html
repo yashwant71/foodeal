@@ -2,7 +2,7 @@
 <header>
   <div class="container">
     <default-button text="FoodeaL" [widthRem]="10" (click)="goToHome()" [marginRem]="0" borderRadRem="0"></default-button>
-    <span class="loop-wrapper">
+    <span class="loop-wrapper" [ngClass]="{'seller-bg': user.isSeller}">
       <div class="mountain"></div>
       <div class="hill"></div>
       <div class="tree tree1"></div>

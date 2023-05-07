@@ -82,7 +82,16 @@ li a img{
   flex: 3;
   text-align: right;
 }
-
+.cook-time span{
+    display: flex;
+  justify-content: center;
+  align-items: center ;
+}
+.cook-time img{
+  width: 1.5rem;
+  height: 1.5rem !important;
+  margin-right: 2px;
+}
 .price{
   position: absolute;
   bottom: 0;

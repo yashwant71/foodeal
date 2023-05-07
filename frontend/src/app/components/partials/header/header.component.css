@@ -92,15 +92,13 @@ a span{
 
 
 .loop-wrapper {
-  /* margin: -3px; */
   position: relative;
   display: block;
   width: -webkit-fill-available;
-  /* height: 250px; */
   overflow: hidden;
-  /* border-bottom: 3px solid #fff; */
   color: #fff;
   background-color: var(--col1);
+  transition: background-color 1s ease;
 }
 .mountain {
   position: absolute;
@@ -248,4 +246,8 @@ a span{
   .loop-wrapper{
     display: none;
   }
+}
+
+.seller-bg{
+  background-color: var(--col2) !important;
 }
