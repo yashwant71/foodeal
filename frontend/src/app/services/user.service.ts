@@ -182,7 +182,6 @@ export class UserService {
       return response.json();
     })
     .then(user => {
-      console.log("updated user",user)
       this.setUserToLocalStorage(user);
       this.userSubject.next(user);
       if(user.isSeller)
