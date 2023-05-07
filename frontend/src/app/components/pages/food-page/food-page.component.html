@@ -55,8 +55,9 @@
     <!-- <button (click)="addToCart()">Add To Cart</button> -->
     <default-button text="Add to cart" [widthRem]="25" [marginRem]="0" (click)="addToCart()"></default-button>
     <div class="sellercont" >seller:
-      <div class="imagebox">
-        <img [src]="food.seller.image" width="40" alt="">
+      <div class="imagebox" >
+        <img [src]="food.seller?.image" width="40" alt="" *ngIf="food.seller.image">
+        <img src="assets/user.png" alt="" *ngIf="!food.seller.image">
       </div>
       <strong [title]="food.seller.name">{{food.seller.email}}</strong>
     </div>
