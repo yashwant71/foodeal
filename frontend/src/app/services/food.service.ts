@@ -19,7 +19,6 @@ export class FoodService {
       var foodslength = JSON.parse(foods).length;
       return this.http.get<boolean>(FOOD_COUNT_URL + foodslength).pipe(
         switchMap((data) => {
-          console.log("food",data)
           if (data) {
             return of(JSON.parse(foods));
           } else {
@@ -46,7 +45,6 @@ export class FoodService {
         this.http.get<Food[]>(FOODS_URL).pipe(
           tap((foods) => {
             localStorage.setItem('foods', JSON.stringify(foods));
-            console.log("hello",foods)
           })).subscribe();
       })
     );

@@ -11,7 +11,6 @@ export class ToggleSellerComponent {
   user!:User;
   constructor(private userService:UserService){
     this.user = userService.currentUser
-    console.log(this.user)
   }
   toggleSeller(event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;

@@ -37,9 +37,8 @@ export class GoogleLoginComponent {
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl;
 
   }
-  
+
   async handleCredentialResponse(response: CredentialResponse) {
-    console.log(response)
     this.userService.LoginWithGoogle(response).subscribe(() => {
       //  this.userService.userImageUpdatedSubject.next(); // emit the event
        this.router.events.subscribe((event) => {

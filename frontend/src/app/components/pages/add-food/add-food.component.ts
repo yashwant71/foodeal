@@ -97,7 +97,6 @@ export class AddFoodComponent {
       image: this.selectedFile,
       seller: this.user.id
     };
-    console.log(food);
 
     this.foodService.Add(food).subscribe(_ => {
       this.router.navigateByUrl('/');
