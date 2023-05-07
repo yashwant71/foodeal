@@ -42,3 +42,19 @@ a{
   --font-color1: rgb(50, 2, 50);
 
 }
+
+.multiselect-item-checkbox input[type=checkbox] + div:before{
+  color: var(--col1) !important;
+  border: 2px solid var(--col1) !important;
+}
+.multiselect-item-checkbox input[type=checkbox]:checked + div:before{
+  background: var(--col1) !important;
+}
+.multiselect-dropdown .dropdown-btn .selected-item-container .selected-item{
+  background-color: var(--col1) !important;
+  border: 2px solid var(--col1) !important;
+}
+.multiselect-dropdown .dropdown-btn {
+  border-radius: 0.7rem !important;
+  border: 1px solid var(--col2) !important;
+}
