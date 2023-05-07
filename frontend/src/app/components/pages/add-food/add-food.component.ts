@@ -16,7 +16,7 @@ export class AddFoodComponent {
   isSubmitted = false;
   registerForm!:FormGroup;
   user!:User;
-  tagsOptions: string[] = ['Vegetarian', 'Vegan', 'Gluten-free', 'Low-carb','FastFood','Soup','dessert'];
+  tagsOptions: string[] = ['Vegetarian', 'Vegan','non-veg', 'Gluten-free', 'Low-carb','FastFood','Soup','Sweet','Salad'];
   originsOptions: string[] = ['Italian', 'Mexican', 'Thai', 'Indian','american','chinese','worldwide'];
   selectedTags:string[];
   selectedOrigins:string[];
