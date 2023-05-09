@@ -1,7 +1,7 @@
 <input-container [label]="label">
 <input [type]="type" [placeholder]="label"
  [formControl]="formControl"/>
-<input-validation
+<input-validation *ngIf="showErrorsWhen"
 [control]="control"
 [showErrorsWhen]="showErrorsWhen">
 </input-validation>
