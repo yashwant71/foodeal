@@ -27,3 +27,4 @@ The FoodDeal app can be used to buy and sell food items. Buyers can search for f
 ### misc links
 [link for add icon](https://www.flaticon.com/free-icon/plus_1828817?term=add&page=1&position=4&origin=tag&related_id=1828817)
 [link for close icon](https://www.flaticon.com/free-icon/close_463612?term=close&page=1&position=8&origin=tag&related_id=463612)
+[link for favicon icon](https://www.flaticon.com/free-icon/letter-f_8745774?term=f&page=1&position=89&origin=search&related_id=8745774)

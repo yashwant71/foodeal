@@ -36,9 +36,9 @@ a{
 }
 
 :root {
-  --col1: rgb(130, 3, 130);
-  --col2: rgb(216, 139, 216);
-  --col3: rgb(235, 220, 235);
+  --col1: #820382;
+  --col2: #D88BD8;
+  --col3: #EBDCEB;
   --font-color1: rgb(50, 2, 50);
 
 }
